@@ -1,1990 +1,1052 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masjid e Aaisha Qadeem Hifazat Nagar Ankleshwar</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="manifest" href="manifest.json">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Amiri:wght@400;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #F8FAF5;
-            color: #1A1A1A;
-            overflow-x: hidden;
-            padding-top: 70px;
-            padding-bottom: 70px;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-        body.dark-mode {
-            background: #121212;
-            color: #E8ECE0;
-        }
-        body.dark-mode .header, body.dark-mode .bottom-nav, body.dark-mode .edit-panel, 
-        body.dark-mode .edit-profile-panel, body.dark-mode .edit-video-panel, body.dark-mode .prayer-card, 
-        body.dark-mode .notice-board, body.dark-mode .video-card, body.dark-mode .gallery-card, 
-        body.dark-mode .admission .rules, body.dark-mode .admission form, body.dark-mode .maktab-card, 
-        body.dark-mode .donation .content, body.dark-mode .contact-details, body.dark-mode .contact form, 
-        body.dark-mode .profile-card, body.dark-mode .settings-card {
-            background: rgba(30, 30, 30, 0.95);
-            border-color: rgba(232, 236, 224, 0.2);
-        }
-        body.dark-mode .carousel-slide {
-            color: #E8ECE0;
-            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.2);
-        }
-        body.dark-mode input, body.dark-mode select, body.dark-mode textarea {
-            background: rgba(50, 50, 50, 0.9);
-            color: #E8ECE0;
-            border-color: rgba(232, 236, 224, 0.3);
-        }
-        body.dark-mode .settings-card p, body.dark-mode .prayer-card p, body.dark-mode .notice-slide, 
-        body.dark-mode .video-card p, body.dark-mode .gallery-card p, body.dark-mode .admission .rules li, 
-        body.dark-mode .donation p, body.dark-mode .contact-details p, body.dark-mode .profile-details p, 
-        body.dark-mode .profile-bio {
-            color: #A0A0A0;
-        }
-        #mainContent {
-            display: none;
-        }
-        #splashScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1A4D2E 0%, #3D8B57 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            animation: fadeIn 0.6s ease-in, fadeOut 0.6s ease-out 2.5s forwards;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-        #splashScreen img {
-            max-width: 70%;
-            max-height: 45%;
-            margin-bottom: 20px;
-            animation: scalePulse 2s ease-in-out infinite;
-            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
-        }
-        #splashScreen h1 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #E8ECE0;
-            font-family: 'Amiri', serif;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        #splashScreen h1 .urdu {
-            display: block;
-            font-family: 'Amiri', serif;
-            font-size: 16px;
-            direction: rtl;
-            color: #E8ECE0;
-        }
-        #splashScreen p {
-            font-size: 12px;
-            color: #A0A0A0;
-            font-family: 'Inter', sans-serif;
-        }
-        .circle {
-            position: absolute;
-            background: rgba(232, 236, 224, 0.2);
-            border-radius: 50%;
-            animation: pulse 4s ease-in-out infinite, move 6s ease-in-out infinite;
-        }
-        .circle:nth-child(1) { width: 60px; height: 60px; top: 15%; left: 10%; animation-delay: 0s; }
-        .circle:nth-child(2) { width: 90px; height: 90px; top: 25%; right: 15%; animation-delay: 0.5s; }
-        .circle:nth-child(3) { width: 70px; height: 70px; bottom: 20%; left: 20%; animation-delay: 1s; }
-        .circle:nth-child(4) { width: 80px; height: 80px; top: 45%; left: 55%; animation-delay: 1.5s; }
-        .circle:nth-child(5) { width: 100px; height: 100px; bottom: 10%; right: 25%; animation-delay: 2s; }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.2; }
-            50% { transform: scale(1.3); opacity: 0.4; }
-        }
-        @keyframes move {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(25px, -25px); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-        @keyframes scalePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-        }
-        .header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(248, 250, 245, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(26, 77, 46, 0.2);
-            padding: 12px 20px;
-            z-index: 1000;
-            animation: fadeIn 0.8s ease-in;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .header .hamburger {
-            font-size: 26px;
-            color: #1A4D2E;
-            cursor: pointer;
-            padding: 0 10px;
-            transition: transform 0.3s ease;
-        }
-        .header .hamburger:hover {
-            transform: scale(1.1);
-        }
-        .header h1 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1A4D2E;
-            font-family: 'Amiri', serif;
-            text-align: center;
-            flex-grow: 1;
-        }
-        .header h1 .urdu {
-            display: block;
-            font-family: 'Amiri', serif;
-            font-size: 14px;
-            direction: rtl;
-            color: #1A4D2E;
-        }
-        .side-menu {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 280px;
-            height: 100%;
-            background: #1A4D2E;
-            color: #E8ECE0;
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 2000;
-            padding-top: 70px;
-        }
-        .side-menu.active {
-            left: 0;
-        }
-        .side-menu .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 26px;
-            color: #E8ECE0;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .side-menu .close-btn:hover {
-            transform: scale(1.1);
-        }
-        .side-menu ul {
-            list-style: none;
-            padding: 0;
-        }
-        .side-menu ul li {
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(232, 236, 224, 0.2);
-        }
-        .side-menu ul li a {
-            color: #E8ECE0;
-            text-decoration: none;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        .side-menu ul li a:hover, .side-menu ul li a.active {
-            color: #FFD700;
-            transform: translateX(5px);
-        }
-        .side-menu ul li a i {
-            font-size: 20px;
-        }
-        .side-menu .app-info {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-            text-align: center;
-            color: #E8ECE0;
-            font-size: 12px;
-        }
-        .side-menu .app-info p {
-            margin-bottom: 10px;
-        }
-        .side-menu .app-info img {
-            width: 110px;
-            margin: 5px;
-            filter: brightness(0.9);
-        }
-        .edit-panel, .edit-profile-panel, .edit-video-panel {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 500px;
-            max-height: 85vh;
-            background: #F8FAF5;
-            padding: 20px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-            border-radius: 12px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
-            overflow-y: auto;
-            display: none;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            opacity: 0;
-        }
-        .edit-panel.active, .edit-profile-panel.active, .edit-video-panel.active {
-            display: block;
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-        .edit-panel .password-section, .edit-profile-panel .profile-form, .edit-video-panel .video-form {
-            margin-bottom: 15px;
-        }
-        .edit-panel .password-section input, .edit-profile-panel .profile-form input, 
-        .edit-profile-panel .profile-form textarea, .edit-video-panel .video-form input, 
-        .edit-video-panel .video-form textarea {
-            padding: 10px;
-            width: 100%;
-            border: 1px solid rgba(26, 77, 46, 0.3);
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .edit-panel .password-section input:focus, .edit-profile-panel .profile-form input:focus, 
-        .edit-profile-panel .profile-form textarea:focus, .edit-video-panel .video-form input:focus, 
-        .edit-video-panel .video-form textarea:focus {
-            border-color: #1A4D2E;
-            box-shadow: 0 0 8px rgba(26, 77, 46, 0.3);
-            outline: none;
-        }
-        .edit-panel .password-section button, .edit-profile-panel .profile-form button, 
-        .edit-video-panel .video-form button {
-            padding: 8px 16px;
-            background: #1A4D2E;
-            color: #E8ECE0;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        .edit-panel .password-section button:hover, .edit-profile-panel .profile-form button:hover, 
-        .edit-video-panel .video-form button:hover {
-            background: #2E7D32;
-            transform: translateY(-2px);
-        }
-        .edit-panel .time-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .edit-panel .time-inputs div {
-            margin-bottom: 12px;
-        }
-        .edit-panel .time-inputs label, .edit-profile-panel .profile-form label, 
-        .edit-video-panel .video-form label {
-            display: block;
-            font-size: 13px;
-            color: #1A1A1A;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-        .edit-panel .save-button, .edit-panel .close-button, .edit-profile-panel .save-button, 
-        .edit-profile-panel .close-button, .edit-video-panel .save-button, .edit-video-panel .close-button {
-            background: #1A4D2E;
-            color: #E8ECE0;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            margin-top: 12px;
-        }
-        .edit-panel .save-button:hover, .edit-profile-panel .save-button:hover, 
-        .edit-video-panel .save-button:hover {
-            background: #2E7D32;
-            transform: translateY(-2px);
-        }
-        .edit-panel .close-button, .edit-profile-panel .close-button, .edit-video-panel .close-button {
-            background: #4A4A4A;
-        }
-        .edit-panel .close-button:hover, .edit-profile-panel .close-button:hover, 
-        .edit-video-panel .close-button:hover {
-            background: #333333;
-            transform: translateY(-2px);
-        }
-        .edit-profile-panel .profile-form img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 12px auto;
-            display: block;
-        }
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #1A4D2E;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            z-index: 1000;
-            border-top: 1px solid rgba(232, 236, 224, 0.2);
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .bottom-nav a {
-            color: #E8ECE0;
-            text-decoration: none;
-            font-size: 13px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        .bottom-nav a.active, .bottom-nav a:hover {
-            color: #FFD700;
-            transform: scale(1.1);
-        }
-        .bottom-nav a i {
-            font-size: 22px;
-        }
-        .page {
-            display: none;
-            padding: 20px;
-            min-height: 100vh;
-            animation: fadeIn 0.6s ease-in;
-            padding-top: 70px;
-        }
-        .page.active {
-            display: block;
-        }
-        .hero {
-            height: 30vh;
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 1.2s ease-in;
-            border: 2px solid #1A4D2E;
-            border-radius: 12px;
-        }
-        .carousel {
-            display: flex;
-            width: 300%;
-            height: 100%;
-            transition: transform 0.5s ease;
-        }
-        .carousel-slide {
-            width: 33.33%;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #E8ECE0;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-            padding: 15px;
-            word-wrap: break-word;
-        }
-        .carousel-slide h2 {
-            font-size: 20px;
-            margin-bottom: 8px;
-            font-family: 'Amiri', serif;
-        }
-        .carousel-slide .urdu {
-            font-size: 14px;
-            margin-bottom: 8px;
-            font-family: 'Amiri', serif;
-        }
-        .carousel-slide p {
-            font-size: 12px;
-            margin-bottom: 8px;
-        }
-        .carousel-slide .btn {
-            background: #1A4D2E;
-            color: #E8ECE0;
-            padding: 8px 18px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-        .carousel-slide .btn:hover {
-            background: #2E7D32;
-            transform: scale(1.05);
-        }
-        .carousel-controls {
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
-        }
-        .carousel-controls button {
-            background: rgba(232, 236, 224, 0.4);
-            border: none;
-            padding: 6px;
-            margin: 0 5px;
-            cursor: pointer;
-            border-radius: 50%;
-            font-size: 14px;
-            transition: background 0.3s ease;
-        }
-        .carousel-controls button:hover {
-            background: #1A4D2E;
-            color: #E8ECE0;
-        }
-        .prayer-card-container {
-            max-width: 95%;
-            margin: 20px auto;
-            text-align: center;
-        }
-        .prayer-card {
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-            display: none;
-            animation: cardFadeIn 0.6s ease-in;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .prayer-card.active {
-            display: block;
-            transform: scale(1.03);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        .prayer-card h3 {
-            font-size: 22px;
-            color: #1A4D2E;
-            margin-bottom: 12px;
-            font-family: 'Amiri', serif;
-        }
-        .prayer-card .urdu {
-            font-family: 'Amiri', serif;
-            font-size: 18px;
-            color: #1A4D2E;
-            direction: rtl;
-            margin-bottom: 12px;
-        }
-        .prayer-card p {
-            FONT-SIZE: 14PX;
-            color: #4A4A4A;
-            margin-bottom: 10px;
-        }
-        .prayer-card .time {
-            font-size: 15px;
-            color: #1A4D2E;
-            font-weight: 600;
-        }
-        @keyframes cardFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .notice-board {
-            max-width: 95%;
-            margin: 20px auto;
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 15px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-            text-align: center;
-            overflow: hidden;
-            position: relative;
-        }
-        .notice-board h2 {
-            font-size: 20px;
-            color: #1A4D2E;
-            margin-bottom: 12px;
-            position: relative;
-        }
-        .notice-board h2::before {
-            content: "نوٹس بورڈ";
-            display: block;
-            font-family: 'Amiri', serif;
-            font-size: 16px;
-            color: #1A4D2E;
-            margin-bottom: 6px;
-        }
-        .notice-board h2::after {
-            content: "નોટિસ બોર્ડ";
-            display: block;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            color: #1A4D2E;
-            margin-top: 6px;
-        }
-        .notice-carousel {
-            display: flex;
-            width: 500%;
-            height: 120px;
-            transition: transform 0.8s ease;
-        }
-        .notice-slide {
-            width: 20%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 12px;
-            color: #4A4A4A;
-            font-size: 13px;
-            word-wrap: break-word;
-            box-sizing: border-box;
-        }
-        .video-gallery {
-            padding: 25px 20px;
-            background: #F8FAF5;
-            animation: slideUp 1s ease-out;
-            margin-bottom: 25px;
-        }
-        .video-gallery h2 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 25px;
-            color: #1A4D2E;
-        }
-        .video-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            max-width: 95%;
-            margin: 0 auto;
-        }
-        .video-card {
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-            padding: 15px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .video-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        .video-card iframe, .video-card video {
-            width: 100%;
-            height: 180px;
-            border-radius: 10px;
-        }
-        .video-card p {
-            font-size: 13px;
-            color: #4A4A4A;
-            margin-top: 10px;
-            word-wrap: break-word;
-        }
-        .gallery h2 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 25px;
-            color: #1A4D2E;
-        }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            max-width: 95%;
-            margin: 0 auto;
-        }
-        .gallery-card {
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-            padding: 15px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .gallery-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        .gallery-card img {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-        .gallery-card p {
-            font-size: 13px;
-            color: #4A4A4A;
-            margin-top: 10px;
-            word-wrap: break-word;
-        }
-        .admission h2 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 25px;
-            color: #1A4D2E;
-        }
-        .admission .rules {
-            max-width: 95%;
-            margin: 0 auto 20px;
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 15px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-        }
-        .admission .rules h3 {
-            font-size: 20px;
-            color: #1A4D2E;
-            margin-bottom: 12px;
-        }
-        .admission .rules ul {
-            list-style-type: disc;
-            padding-left: 20px;
-            font-size: 13px;
-            color: #4A4A4A;
-        }
-        .admission .rules li {
-            margin-bottom: 10px;
-        }
-        .admission form {
-            max-width: 95%;
-            margin: 0 auto;
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-        }
-        .admission label {
-            display: block;
-            margin: 8px 0 5px;
-            color: #1A1A1A;
-            font-weight: 500;
-            font-size: 13px;
-        }
-        .admission input, .admission select, .admission textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
-            border: none;
-            border-radius: 6px;
-            background: rgba(248, 250, 245, 0.3);
-            color: #1A1A1A;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        .admission input:focus, .admission select:focus, .admission textarea:focus {
-            transform: scale(1.01);
-            box-shadow: 0 0 8px rgba(26, 77, 46, 0.3);
-            outline: none;
-        }
-        .admission input::placeholder, .admission textarea::placeholder {
-            color: rgba(26, 77, 46, 0.7);
-        }
-        .admission button {
-            background: #1A4D2E;
-            color: #E8ECE0;
-            padding: 10px;
-            width: 100%;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        .admission button:hover {
-            background: #2E7D32;
-            transform: translateY(-2px);
-        }
-        .maktab h2 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 25px;
-            color: #1A4D2E;
-        }
-        .maktab-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            max-width: 95%;
-            margin: 0 auto;
-        }
-        .maktab-card {
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-            padding: 15px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            overflow: hidden;
-        }
-        .maktab-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        .maktab-card h3 {
-            font-size: 20px;
-            margin-bottom: 8px;
-            color: #1A4D2E;
-        }
-        .maktab-card p {
-            font-size: 13px;
-            color: #4A4A4A;
-            word-wrap: break-word;
-        }
-        .maktab-card img {
-            width: 130px;
-            height: 130px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-        .donation h2 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 25px;
-            color: #1A4D2E;
-        }
-        .donation .content {
-            max-width: 95%;
-            margin: 0 auto;
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-            word-wrap: break-word;
-        }
-        .donation p {
-            font-size: 14px;
-            color: #4A4A4A;
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-        .donation h3 {
-            font-size: 20px;
-            color: #1A4D2E;
-            margin: 15px 0 10px;
-        }
-        .contact h2 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 25px;
-            color: #1A4D2E;
-        }
-        .contact-details {
-            max-width: 95%;
-            margin: 0 auto 20px;
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 15px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-        .contact-details h3 {
-            font-size: 20px;
-            color: #1A4D2E;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        .contact-details p {
-            font-size: 14px;
-            color: #4A4A4A;
-            margin-bottom: 10px;
-            line-height: 1.4;
-            padding: 0 5px;
-            word-wrap: break-word;
-        }
-        .contact-details .urdu {
-            font-family: 'Amiri', serif;
-            direction: rtl;
-            text-align: right;
-        }
-        .contact-details .gujarati {
-            font-family: 'Inter', sans-serif;
-        }
-        .contact form {
-            max-width: 95%;
-            margin: 0 auto;
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-        }
-        .contact label {
-            display: block;
-            margin: 8px 0 5px;
-            color: #1A1A1A;
-            font-weight: 500;
-            font-size: 13px;
-        }
-        .contact input, .contact textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
-            border: none;
-            border-radius: 6px;
-            background: rgba(248, 250, 245, 0.3);
-            color: #1A1A1A;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        .contact input:focus, .contact textarea:focus {
-            transform: scale(1.01);
-            box-shadow: 0 0 8px rgba(26, 77, 46, 0.3);
-            outline: none;
-        }
-        .contact input::placeholder, .contact textarea::placeholder {
-            color: rgba(26, 77, 46, 0.7);
-        }
-        .contact button {
-            background: #1A4D2E;
-            color: #E8ECE0;
-            padding: 10px;
-            width: 100%;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        .contact button:hover {
-            background: #2E7D32;
-            transform: translateY(-2px);
-        }
-        .profile h2 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 25px;
-            color: #1A4D2E;
-        }
-        .profile-card {
-            max-width: 95%;
-            margin: 0 auto;
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 25px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: slideUp 1s ease-out;
-        }
-        .profile-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        }
-        .profile-img {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 15px;
-            border: 3px solid #1A4D2E;
-            transition: transform 0.3s ease;
-        }
-        .profile-img:hover {
-            transform: scale(1.05);
-        }
-        .profile-card h3 {
-            font-size: 22px;
-            color: #1A4D2E;
-            margin-bottom: 8px;
-            font-family: 'Amiri', serif;
-        }
-        .profile-card .designation {
-            font-size: 15px;
-            color: #4A4A4A;
-            margin-bottom: 15px;
-        }
-        .profile-details {
-            display: grid;
-            gap: 12px;
-            text-align: left;
-            max-width: 450px;
-            margin: 0 auto 20px;
-        }
-        .profile-details p {
-            font-size: 14px;
-            color: #4A4A4A;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .profile-details p i {
-            color: #1A4D2E;
-            font-size: 18px;
-        }
-        .profile-bio {
-            font-size: 14px;
-            color: #4A4A4A;
-            line-height: 1.6;
-            margin-top: 15px;
-        }
-        .settings h2 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 25px;
-            color: #1A4D2E;
-        }
-        .settings-grid {
-            max-width: 95%;
-            margin: 0 auto;
-            display: grid;
-            gap: 20px;
-        }
-        .settings-card {
-            background: rgba(248, 250, 245, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid rgba(26, 77, 46, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .settings-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        }
-        .settings-card i {
-            font-size: 26px;
-            color: #1A4D2E;
-        }
-        .settings-card .content {
-            flex-grow: 1;
-        }
-        .settings-card h3 {
-            font-size: 18px;
-            color: #1A4D2E;
-            margin-bottom: 8px;
-        }
-        .settings-card p {
-            font-size: 13px;
-            color: #4A4A4A;
-        }
-        .settings-card a, .settings-card button {
-            background: #1A4D2E;
-            color: #E8ECE0;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            margin-top: 12px;
-        }
-        .settings-card a:hover, .settings-card button:hover {
-            background: #2E7D32;
-            transform: translateY(-2px);
-        }
-        .settings-form {
-            margin-top: 12px;
-        }
-        .settings-form label {
-            display: block;
-            margin: 8px 0 5px;
-            color: #1A1A1A;
-            font-weight: 500;
-            font-size: 13px;
-        }
-        .settings-form input, .settings-form select, .settings-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
-            border: none;
-            border-radius: 6px;
-            background: rgba(248, 250, 245, 0.3);
-            color: #1A1A1A;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        .settings-form input:focus, .settings-form select:focus, .settings-form textarea:focus {
-            transform: scale(1.01);
-            box-shadow: 0 0 8px rgba(26, 77, 46, 0.3);
-            outline: none;
-        }
-        .settings-form button {
-            width: 100%;
-        }
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 22px;
-        }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #4A4A4A;
-            transition: 0.4s;
-            border-radius: 22px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 2px;
-            bottom: 2px;
-            background: #E8ECE0;
-            transition: 0.4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider {
-            background: #1A4D2E;
-        }
-        input:checked + .slider:before {
-            transform: translateX(22px);
-        }
-        @media (min-width: 768px) {
-            body {
-                padding-top: 90px;
-                padding-bottom: 90px;
-            }
-            .header {
-                padding: 20px 0;
-                height: 90px;
-            }
-            .page {
-                padding-top: 90px;
-            }
-            .hero {
-                height: 45vh;
-                padding-top: 15px;
-            }
-            .carousel-slide h2 {
-                font-size: 28px;
-            }
-            .carousel-slide .urdu {
-                font-size: 18px;
-            }
-            .carousel-slide p {
-                font-size: 14px;
-            }
-            .carousel-slide .btn {
-                padding: 12px 24px;
-                font-size: 14px;
-            }
-            .prayer-card-container {
-                max-width: 600px;
-                padding: 20px;
-            }
-            .prayer-card h3 {
-                font-size: 26px;
-            }
-            .notice-board {
-                max-width: 600px;
-                padding: 20px;
-            }
-            .notice-board h2 {
-                font-size: 22px;
-            }
-            .notice-carousel {
-                height: 160px;
-            }
-            .notice-slide {
-                font-size: 14px;
-            }
-            .about {
-                padding: 50px 25px;
-            }
-            .video-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                max-width: 1200px;
-            }
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-                max-width: 1200px;
-            }
-            .admission .rules, .admission form, .contact form {
-                max-width: 600px;
-                padding: 25px;
-            }
-            .contact-details {
-                max-width: 600px;
-                padding: 25px;
-            }
-            .profile-card {
-                max-width: 700px;
-                padding: 35px;
-            }
-            .profile-img {
-                width: 220px;
-                height: 220px;
-            }
-            .profile-card h3 {
-                font-size: 26px;
-            }
-            .profile-details p {
-                font-size: 16px;
-            }
-            .profile-bio {
-                font-size: 16px;
-            }
-            .settings-grid {
-                max-width: 700px;
-                grid-template-columns: 1fr 1fr;
-            }
-            .bottom-nav {
-                display: none;
-            }
-        }
-        @media (min-width: 1024px) {
-            body {
-                padding-top: 110px;
-            }
-            .header {
-                height: 110px;
-            }
-            .page {
-                padding-top: 110px;
-            }
-            .hero {
-                height: 55vh;
-            }
-            .video-grid, .gallery-grid, .maktab-grid {
-                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            }
-            .prayer-card-container, .notice-board, .about .content, .donation .content, 
-            .contact-details, .admission .rules, .admission form, .contact form, 
-            .profile-card, .settings-grid {
-                max-width: 900px;
-            }
-            .about h2, .video-gallery h2, .gallery h2, .admission h2, .maktab h2, 
-            .donation h2, .contact h2, .profile h2, .settings h2 {
-                font-size: 38px;
-            }
-            .notice-carousel {
-                height: 220px;
-            }
-            .notice-slide {
-                font-size: 16px;
-            }
-            .settings-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Masjid e Aaisha Qadeem</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Added jsPDF and QRCode libraries for PDF and QR code generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.1/qrcode.min.js"></script>
+  <style>
+    :root {
+      --primary: #5C829A;
+      --secondary: #D4C7A1;
+      --background: #FFFFFF;
+      --dark: #333333;
+      --light: #F8F8F8;
+      --golden-ink: #D4C7A1;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--background);
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      background: var(--light);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+    .nav-logo {
+      height: 80px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+      margin: 0 20px;
+    }
+    .nav-logo:hover {
+      transform: scale(1.05);
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .nav-buttons a {
+      color: var(--dark);
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .nav-buttons a:hover {
+      background: var(--primary);
+      color: var(--light);
+    }
+    .hero {
+      height: 60vh;
+      background: url('https://i.ibb.co/TxK61Qxz/quran-4178711.jpg') center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: var(--light);
+      position: relative;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(92, 130, 154, 0.5);
+    }
+    .hero-ayat-img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 95%;
+      max-width: 800px;
+      opacity: 0.4;
+      z-index: 1;
+      object-fit: contain;
+      filter: drop-shadow(1px 1px 3px rgba(0,0,0,0.3));
+    }
+    .hero-content {
+      z-index: 2;
+    }
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      text-shadow: 2px -2px 8px rgba(0,0,0,0.3);
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .section {
+      padding: 60px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section:nth-child(odd) {
+      background: var(--light);
+    }
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .section h2 .hideable {
+      cursor: pointer;
+    }
+    .prayer-times {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+    }
+    .prayer-times h3 {
+      font-size: 1.8rem;
+      color: #5C829A;
+      text-align: center;
+      margin-bottom: 15px;
+      font-family: 'Playfair Display', serif;
+    }
+    .prayer-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .prayer-item:last-child {
+      border-bottom: none;
+    }
+    .prayer-item i {
+      font-size: 1.5rem;
+      margin-right: 10px;
+      color: var(--primary);
+      transition: color 0.3s ease;
+    }
+    .prayer-item i:hover {
+      color: var(--secondary);
+    }
+    .prayer-item div {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .prayer-item .time-labels {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+    .prayer-item .prayer-time {
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 5px;
+      text-align: center;
+      min-width: 80px;
+    }
+    .prayer-item .prayer-name {
+      font-size: 1.1rem;
+      color: var(--dark);
+      font-family: 'Amiri', serif;
+      margin-right: 10px;
+      direction: rtl;
+    }
+    .update-panel {
+      display: none;
+      width: 100%;
+      max-width: 400px;
+      background: var(--light);
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 15px;
+      position: relative;
+      border: 1px solid var(--primary);
+    }
+    .update-panel.active {
+      display: block;
+    }
+    .update-panel .password-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .update-panel .password-section input {
+      padding: 8px;
+      font-size: 1rem;
+      border: 1px solid var(--primary);
+      border-radius: 5px;
+      width: 100%;
+      max-width: 250px;
+      font-family: 'Roboto', sans-serif;
+      background: #fff;
+    }
+    .update-panel .password-section button {
+      padding: 8px 20px;
+      background-color: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Amiri', serif;
+      font-size: 1rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .update-panel .password-section button:hover {
+      background-color: var(--secondary);
+      color: var(--dark);
+      transform: translateY(-2px);
+    }
+    .update-item {
+      display: none;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .update-item.active {
+      display: flex;
+    }
+    .update-item:last-child {
+      border-bottom: none;
+    }
+    .update-item span {
+      font-size: 1.1rem;
+      color: var(--dark);
+      font-family: 'Amiri', serif;
+      min-width: 80px;
+    }
+    .update-item input[type="time"] {
+      margin-left: 10px;
+      padding: 5px;
+      font-size: 1rem;
+      border: 1px solid var(--primary);
+      border-radius: 5px;
+      background: #fff;
+      width: 120px;
+    }
+    .update-panel .submit-button {
+      display: none;
+      margin: 15px auto 0;
+      padding: 8px 20px;
+      background-color: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Amiri', serif;
+      font-size: 1rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .update-panel .submit-button.active {
+      display: block;
+    }
+    .update-panel .submit-button:hover {
+      background-color: var(--secondary);
+      color: var(--dark);
+      transform: translateY(-2px);
+    }
+    .close-panel {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .close-panel:hover {
+      background: var(--secondary);
+      color: var(--dark);
+    }
+    .last-updated {
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+      margin-top: 10px;
+      font-family: 'Amiri', serif;
+    }
+    .info-card {
+      background: var(--light);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .info-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+    .info-card p {
+      font-size: 1.1rem;
+      margin: 10px 0;
+      color: var(--dark);
+    }
+    .info-card a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .info-card a:hover {
+      color: var(--secondary);
+    }
+    .info-card .map-icon {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      width: 100%;
+      padding: 20px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.05);
+    }
+    .image-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    .image-modal .modal-content {
+      position: relative;
+      display: inline-block;
+    }
+    .image-modal img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    .image-modal .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 5px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .image-modal .close-btn:hover {
+      background: var(--secondary);
+      color: var(--dark);
+    }
+    /* Donation Panel Styles */
+    .donation-panel {
+      display: none;
+      width: 100%;
+      max-width: 400px;
+      background: var(--light);
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 15px;
+      position: relative;
+      border: 1px solid var(--primary);
+    }
+    .donation-panel.active {
+      display: block;
+    }
+    .donation-panel .donation-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .donation-panel .donation-form input,
+    .donation-panel .donation-form select {
+      padding: 8px;
+      font-size: 1rem;
+      border: 1px solid var(--primary);
+      border-radius: 5px;
+      width: 100%;
+      font-family: 'Roboto', sans-serif;
+      background: #fff;
+    }
+    .donation-panel .donation-form button {
+      padding: 8px 20px;
+      background-color: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Amiri', serif;
+      font-size: 1rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .donation-panel .donation-form button:hover {
+      background-color: var(--secondary);
+      color: var(--dark);
+      transform: translateY(-2px);
+    }
+    footer {
+      background: var(--primary);
+      color: var(--light);
+      padding: 20px;
+      text-align: center;
+    }
+    footer p {
+      margin: 5px 0;
+    }
+    footer a {
+      color: var(--secondary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    footer a:hover {
+      color: var(--light);
+    }
+    .social-icons {
+      margin-top: 10px;
+    }
+    .social-icons a {
+      margin: 0 10px;
+      font-size: 1.3rem;
+      color: var(--light);
+      transition: color 0.3s ease;
+    }
+    .social-icons a:hover {
+      color: var(--secondary);
+    }
+    @media (max-width: 768px) {
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+      }
+      .nav-logo {
+        height: 60px;
+        margin: 0 10px 0 0;
+      }
+      .nav-buttons {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-right: 10px;
+      }
+      .nav-buttons a {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+      }
+      .hero { height: 50vh; }
+      .hero-content h1 { font-size: 2.5rem; }
+      .hero-content p { font-size: 1rem; }
+      .hero-ayat-img { width: 90%; }
+      .section { padding: 40px 20px; }
+      .section h2 { font-size: 2rem; }
+      .prayer-card h3 { font-size: 1.3rem; }
+      .prayer-card p { font-size: 0.9rem; }
+      .gallery-grid img { height: 150px; }
+    }
+    @media (max-width: 480px) {
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 10px;
+      }
+      .nav-logo {
+        height: 50px;
+        margin: 0 5px 0 0;
+      }
+      .nav-buttons {
+        display: flex;
+        gap: 3px;
+        align-items: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-right: 5px;
+      }
+      .nav-buttons a {
+        font-size: 0.8rem;
+        padding: 5px 8px;
+      }
+      .hero-content h1 { font-size: 2rem; }
+      .hero-content p { font-size: 0.9rem; }
+      .hero-ayat-img { width: 85%; }
+      .section h2 { font-size: 1.8rem; }
+    }
+  </style>
 </head>
 <body>
-    <div id="splashScreen">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <img src="https://i.ibb.co/5g2M2WBM/20250529-154232.png" alt="Masjid e Aaisha Qadeem Logo">
-        <h1>
-            Masjid e Aaisha Qadeem Hifazat Nagar Ankleshwar
-            <span class="urdu">مسجد عائشہ قدیم حفاظت نگر انکلیشور</span>
-        </h1>
-        <p>Version 1.0.0</p>
+  <nav>
+    <a href="#"><img src="https://i.ibb.co/mrq86dPd/20250621-220342.png" alt="Masjid e Aaisha Qadeem Logo" class="nav-logo"></a>
+    <div class="nav-buttons">
+      <a href="#prayer">Prayer Times</a>
+      <a href="#donation">Donation</a>
+      <a href="#visit">Visit Us</a>
+      <a href="#about">About</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#footer">Contact</a>
     </div>
-
-    <div id="mainContent">
-        <header class="header">
-            <i class="fas fa-bars hamburger" onclick="toggleSideMenu()"></i>
-            <h1>
-                Masjid e Aaisha Qadeem Hifazat Nagar Ankleshwar
-                <span class="urdu">مسجد عائشہ قدیم حفاظت نگر انکلیشور</span>
-            </h1>
-        </header>
-
-        <div class="side-menu" id="sideMenu">
-            <i class="fas fa-times close-btn" onclick="toggleSideMenu()"></i>
-            <ul>
-                <li><a href="#" onclick="showPage('profile')"><i class="fas fa-user"></i> Profile</a></li>
-                <li><a href="#" onclick="toggleEditPanel()"><i class="fas fa-clock"></i> Edit Time</a></li>
-                <li><a href="#" onclick="showPage('admission', true)"><i class="fas fa-user-plus"></i> Admission</a></li>
-                <li><a href="#" onclick="showPage('gallery')"><i class="fas fa-images"></i> Gallery</a></li>
-                <li><a href="#" onclick="showPage('about')"><i class="fas fa-info-circle"></i> About</a></li>
-                <li><a href="#" onclick="shareApp()"><i class="fas fa-share-alt"></i> Share App</a></li>
-                <li><a href="#" onclick="showPage('settings')"><i class="fas fa-cog"></i> Settings</a></li>
-            </ul>
-            <div class="app-info">
-                <p>App Version: 1.0.0</p>
-                <a href="https://play.google.com/store" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play Store">
-                </a>
-                <a href="https://www.apple.com/app-store/" target="_blank">
-                    <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="App Store">
-                </a>
-            </div>
-        </div>
-
-        <div class="edit-panel" id="editPanel">
-            <div class="password-section">
-                <input type="password" id="editPassword" placeholder="Enter Password">
-                <button onclick="verifyPassword()">Verify</button>
-            </div>
-            <div class="time-inputs" id="timeInputs"></div>
-            <button class="save-button" onclick="saveTimes()" style="display: none;" id="saveButton">Save Changes</button>
-            <button class="close-button" onclick="toggleEditPanel()">Close</button>
-        </div>
-
-        <div class="edit-profile-panel" id="editProfilePanel">
-            <h3>Edit Profile</h3>
-            <form class="profile-form" id="profileForm" onsubmit="handleProfileUpdate(event)">
-                <label for="profilePhoto">Profile Photo</label>
-                <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*" onchange="previewProfilePhoto(event)">
-                <img id="photoPreview" src="https://i.ibb.co/r2ZPHbC/SHAIKH-KEFAYTULLA-1.jpg" alt="Photo Preview">
-                <label for="profileName">Name</label>
-                <input type="text" id="profileName" name="profileName" required>
-                <label for="profileMobile">Mobile Number</label>
-                <input type="tel" id="profileMobile" name="profileMobile" required>
-                <label for="profileEmail">Email</label>
-                <input type="email" id="profileEmail" name="profileEmail" required>
-                <label for="profileAddress">Address</label>
-                <textarea id="profileAddress" name="profileAddress" required></textarea>
-                <label for="profileBio">Bio</label>
-                <textarea id="profileBio" name="profileBio" required></textarea>
-                <button class="save-button" type="submit">Submit</button>
-                <button class="close-button" type="button" onclick="closeEditProfilePanel()">Close</button>
-            </form>
-        </div>
-
-        <div class="edit-video-panel" id="editVideoPanel">
-            <h3>Edit Video Gallery</h3>
-            <form class="video-form" id="videoForm" onsubmit="handleVideoUpdate(event)">
-                <label for="videoFile">Upload Video File</label>
-                <input type="file" id="videoFile" name="videoFile" accept="video/mp4,video/mov,video/avi">
-                <label for="videoLink">YouTube Video Link</label>
-                <input type="url" id="videoLink" name="videoLink" placeholder="e.g., https://www.youtube.com/watch?v=uvGLd6lm-d4">
-                <label for="videoDescription">Video Description</label>
-                <textarea id="videoDescription" name="videoDescription" required placeholder="Enter video description"></textarea>
-                <button class="save-button" type="submit">Submit</button>
-                <button class="close-button" type="button" onclick="closeEditVideoPanel()">Close</button>
-            </form>
-        </div>
-
-        <div id="home" class="page active">
-            <div class="hero">
-                <div class="carousel">
-                    <div class="carousel-slide" style="background-image: url('https://i.ibb.co/YB5ks4Pd/Masjid-Al-Haram-Zamzam-Well.jpg');">
-                        <h2>Welcome to Masjid e Aaisha Qadeem</h2>
-                        <p class="urdu">مسجد عائشہ قدیم حفاظت نگر، انکلیشور</p>
-                        <p>Ankleshwar’s premier Islamic institute since 1984.</p>
-                        <a href="#" class="btn" onclick="showPage('admission', false)">Apply Now</a>
-                    </div>
-                    <div class="carousel-slide" style="background-image: url('https://i.ibb.co/jvRdSGmB/images-1.jpg');">
-                        <h2>Empowering Through Education</h2>
-                        <p class="urdu">مفت اسلامی تعلیم کا مرکز</p>
-                        <p>Free Islamic education for all.</p>
-                        <a href="#" class="btn" onclick="showPage('donation', false)">Support Us</a>
-                    </div>
-                    <div class="carousel-slide" style="background-image: url('https://i.ibb.co/xS1V5hFt/images-2.jpg');">
-                        <h2>Join Our Community</h2>
-                        <p class="urdu">ہمارے ساتھ شامل ہوں</p>
-                        <p>Learn, grow, and contribute.</p>
-                        <a href="#" class="btn" onclick="showPage('contact', false)">Get in Touch</a>
-                    </div>
-                </div>
-                <div class="carousel-controls">
-                    <button onclick="moveCarousel(-1)">❮</button>
-                    <button onclick="moveCarousel(1)">❯</button>
-                </div>
-            </div>
-            <div class="prayer-card-container">
-                <div class="prayer-card" id="fajr-card">
-                    <h3>Fajr Prayer</h3>
-                    <span class="urdu">فجر</span>
-                    <p class="time">Azan: <span id="fajr-azan">05:00</span></p>
-                    <p class="time">Jamaat: <span id="fajr-jamaat">05:15</span></p>
-                    <p>Prepare for the dawn prayer to start your day with blessings.</p>
-                </div>
-                <div class="prayer-card" id="dhuhr-card">
-                    <h3>Dhuhr Prayer</h3>
-                    <span class="urdu">ظہر</span>
-                    <p class="time">Azan: <span id="dhuhr-azan">12:30</span></p>
-                    <p class="time">Jamaat: <span id="dhuhr-jamaat">12:45</span></p>
-                    <p>Midday prayer to seek guidance and peace.</p>
-                </div>
-                <div class="prayer-card" id="asr-card">
-                    <h3>Asr Prayer</h3>
-                    <span class="urdu">عصر</span>
-                    <p class="time">Azan: <span id="asr-azan">16:00</span></p>
-                    <p class="time">Jamaat: <span id="asr-jamaat">16:15</span></p>
-                    <p>Afternoon prayer to maintain spiritual focus.</p>
-                </div>
-                <div class="prayer-card" id="maghrib-card">
-                    <h3>Maghrib Prayer</h3>
-                    <span class="urdu">مغرب</span>
-                    <p class="time">Azan: <span id="maghrib-azan">18:45</span></p>
-                    <p class="time">Jamaat: <span id="maghrib-jamaat">19:00</span></p>
-                    <p>Sunset prayer to reflect and give thanks.</p>
-                </div>
-                <div class="prayer-card" id="isha-card">
-                    <h3>Isha Prayer</h3>
-                    <span class="urdu">عشاء</span>
-                    <p class="time">Azan: <span id="isha-azan">19:30</span></p>
-                    <p class="time">Jamaat: <span id="isha-jamaat">19:45</span></p>
-                    <p>Night prayer to conclude your day with devotion.</p>
-                </div>
-            </div>
-            <div class="notice-board">
-                <h2>Notice Board</h2>
-                <div class="notice-carousel">
-                    <div class="notice-slide">
-                        <p class="english">Next Jumma (4th April 2025): Bayan by Moulana Ameen Sahab, Ustad-e-Hadith, Masjid e Aaisha Qadeem Hifazat Nagar, Ankleshwar</p>
-                        <p class="urdu">اگلا جمعہ (4 اپریل 2025): بیان مولانا امین صاحب، استادِ حدیث، مسجد عائشہ قدیم حفاظت نگر، انکلیشور</p>
-                        <p class="gujarati">આગામી જુમ્મા (4 એપ્રિલ 2025): મૌલાના અમીન સાહબ, ઉસ્તાદ-એ-હદીસ, મસ્જિદ એ આઇશા કદીમ હિફાઝત નગર, અંકલેશ્વર દ્વારા બયાન</p>
-                    </div>
-                    <div class="notice-slide">
-                        <p class="english">Jumma (11th April 2025): Bayan by Hazrat Moulana Habib Sahab, Ustad, Jamia Rahmatullil Alameen, Shanti Nagar</p>
-                        <p class="urdu">جمعہ (11 اپریل 2025): بیان حضرت مولانا حبیب صاحب، استاد، جامعہ رحمت اللہ عالمین، شانتی نگر</p>
-                        <p class="gujarati">જુમ્મા (11 એપ્રિલ 2025): હઝરત મૌલાના હબીબ સાહબ, ઉસ્તાદ, જામિયા રહમતુલ્લીલ આલમીન, શાંતિ નગર દ્વારા બયાન</p>
-                    </div>
-                    <div class="notice-slide">
-                        <p class="english">Jumma (18th April 2025): Bayan by Hazrat Moulana Jarrar Sahab, Imam, Masjid e Aaisha Qadeem Hifazat Nagar</p>
-                        <p class="urdu">جمعہ (18 اپریل 2025): بیان حضرت مولانا جرار صاحب، امام، مسجد عائشہ قدیم حفاظت نگر</p>
-                        <p class="gujarati">જુમ્મા (18 એપ્રિલ 2025): હઝરત મૌલાના જર્રાર સાહબ, ઇમામ, મસ્જિદ એ આઇશા કદીમ હિફાઝત નગર દ્વારા બયાન</p>
-                    </div>
-                    <div class="notice-slide">
-                        <p class="english">Jumma (25th April 2025): Bayan by Hazrat Moulana Jarrar Sahab, Imam, Masjid e Aaisha Qadeem Hifazat Nagar</p>
-                        <p class="urdu">جمعہ (25 اپریل 2025): بیان حضرت مولانا جرار صاحب، امام، مسجد عائشہ قدیم حفاظت نگر</p>
-                        <p class="gujarati">જુમ્મા (25 એપ્રિલ 2025): હઝરત મૌલાના જર્રાર સાહબ, ઇમામ, મસ્જિદ એ આઇશા કદીમ હિફાઝત નગર દ્વારા બયાન</p>
-                    </div>
-                    <div class="notice-slide">
-                        <p class="english">Jumma Ka Chanda Total Amount: ₹50,000</p>
-                        <p class="urdu">جمعہ کا چندہ کل رقم: ₹50,000</p>
-                        <p class="gujarati">જુમ્માનો ચંદો કુલ રકમ: ₹50,000</p>
-                    </div>
-                </div>
-            </div>
-            <div class="about">
-                <h2>About Masjid e Aaisha Qadeem</h2>
-                <p>Established in 1984 in the heart of Ankleshwar, Gujarat, Masjid e Aaisha Qadeem Hifazat Nagar stands as a beacon of Islamic education and community service. For over four decades, it has been dedicated to providing free, high-quality Islamic education to students from diverse backgrounds, fostering spiritual growth, and promoting unity within the community.</p>
-                <a href="#" class="btn" onclick="showPage('about')">Read More</a>
-            </div>
-            <div class="video-gallery">
-                <h2>Our Legacy in Videos</h2>
-                <div class="video-grid" id="videoGrid">
-                    <div class="video-card">
-                        <iframe src="https://www.youtube.com/embed/uvGLd6lm-d4" frameborder="0" allowfullscreen></iframe>
-                        <p>Tarana Masjid e Aaisha Qadeem Hifazat Nagar Ankleshwar (2021)</p>
-                    </div>
-                    <div class="video-card">
-                        <iframe src="https://www.youtube.com/embed/uvGLd6lm-d4" frameborder="0" allowfullscreen></iframe>
-                        <p>Taziyati Kalam Molana Musa Mankrod Rh (2020)</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="about" class="page">
-            <div class="about">
-                <h2>About Masjid e Aaisha Qadeem</h2>
-                <div class="content">
-                    <h3>Our History</h3>
-                    <p>Founded in 1984 in Ankleshwar, Gujarat, Masjid e Aaisha Qadeem Hifazat Nagar was established with a vision to serve as a center for Islamic learning and community welfare. Since its inception, it has grown into one of the most respected Islamic institutions in the region, offering free education and spiritual guidance to thousands of students. The masjid and its associated madrasa were built to preserve and promote the teachings of Islam, fostering an environment of knowledge, piety, and compassion.</p>
-                    <h3>Our Mission</h3>
-                    <p>At Masjid e Aaisha Qadeem Hifazat Nagar, our mission is to provide accessible, high-quality Islamic education to all, regardless of financial or social barriers. We aim to nurture a generation of knowledgeable, ethical, and compassionate individuals who can contribute positively to society while upholding Islamic values. Our programs are designed to balance traditional Islamic scholarship with contemporary skills, ensuring our students are well-equipped for the modern world.</p>
-                    <h3>Educational Excellence</h3>
-                    <p>The masjid operates a comprehensive madrasa that offers courses in Hifz-e-Quran, Alim studies, Tafseer, and Arabic language, among others. With a dedicated team of experienced scholars and educators, we have successfully trained hundreds of students who have gone on to become scholars, qaris, and hafizs. In addition, we run a primary school recognized by the Gujarat government, providing secular education alongside Islamic studies to young learners.</p>
-                    <h3>Community Engagement</h3>
-                    <p>Beyond education, Masjid e Aaisha Qadeem Hifazat Nagar is deeply committed to serving the Ankleshwar community. We organize regular religious gatherings, charity drives, and social welfare programs to support the underprivileged. We also facilitate community events such as Jumma prayers, Islamic seminars, and naat competitions, fostering a sense of unity and spiritual connection among residents.</p>
-                    <h3>Our Legacy</h3>
-                    <p>Over the past four decades, Masjid e Aaisha Qadeem Hifazat Nagar has made significant contributions to Islamic education and community development in Ankleshwar. We take pride in our alumni, who serve as imams, educators, and community leaders across India and beyond. With the support of our donors and the dedication of our staff, we continue to expand our initiatives, striving to make a lasting impact on society.</p>
-                    <h3>About the Committee</h3>
-                    <p>The Masjid e Aaisha Qadeem Hifazat Nagar is managed by a dedicated committee consisting of the following esteemed members: <strong>Haji Iftikhar Sahab</strong>, <strong>Haji Irfan Sahab</strong>, and <strong>Hafiz Abdul Aleem Sahab</strong>. Their leadership ensures the masjid continues to thrive as a center of learning and community service.</p>
-                    <p>We invite you to visit Masjid e Aaisha Qadeem Hifazat Nagar, learn more about our work, and join us in our mission to spread knowledge and compassion. Your support and prayers are invaluable to our continued success.</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="admission" class="page">
-            <div class="admission">
-                <h2>Admission</h2>
-                <div class="rules">
-                    <h3>Maktab Admission Rules</h3>
-                    <ul>
-                        <li>Eligibility: Applicants must be approximately 5 years old with a willingness to learn Nurani Qaida, Hifz-e-Quran, Urdu, and writing skills.</li>
-                        <li>Dress Code: Students must wear traditional Islamic attire (kurta-pajama, topi) during classes and prayers.</li>
-                        <li>Attendance: 100% attendance is mandatory for all classes and daily prayers unless excused by the administration.</li>
-                        <li>Mobile Phones: Use of mobile phones is prohibited during classes and study hours to maintain focus.</li>
-                        <li>Conduct: Students must adhere to Islamic etiquette, respect teachers, and maintain discipline at all times.</li>
-                        <li>Residence: Residential students must follow hostel rules, including fixed meal and sleep schedules.</li>
-                    </ul>
-                </div>
-                <form id="admissionForm" onsubmit="handleAdmission(event)">
-                    <label for="applicantName">Applicant Name</label>
-                    <input type="text" id="applicantName" name="applicantName" required placeholder="Enter full name">
-                    <label for="age">Age</label>
-                    <input type="number" id="age" name="age" min="5" max="7" required placeholder="Enter age">
-                    <label for="course">Course</label>
-                    <select id="course" name="course" required>
-                        <option value="" disabled selected>Select course</option>
-                        <option value="Maktab">Maktab (Nurani Qaida, Hifz, Urdu, Writing)</option>
-                    </select>
-                    <label for="education">Previous Education</label>
-                    <textarea id="education" name="education" required placeholder="Briefly describe any prior learning (if any)"></textarea>
-                    <label for="contactNumber">Contact Number</label>
-                    <input type="tel" id="contactNumber" name="contactNumber" required placeholder="Enter phone number">
-                    <button type="submit">Submit Application</button>
-                </form>
-            </div>
-        </div>
-
-        <div id="maktab" class="page">
-            <div class="maktab">
-                <h2>Our Maktab</h2>
-                <div id="maktabGrid" class="maktab-grid">
-                    <div class="maktab-card">
-                        <h3>Maktab Curriculum</h3>
-                        <p>Our Maktab is designed for young children, starting at age 5, to learn the basics of Islamic education. The curriculum begins with Nurani Qaida, progresses to Hifz-e-Quran, and includes Urdu reading, writing, and basic Islamic teachings.</p>
-                    </div>
-                    <div class="maktab-card">
-                        <h3>Our Teachers</h3>
-                        <p>The Maktab is led by two dedicated teachers: Moulana Jarrar Sahab, Imam of Masjid e Aaisha Qadeem Hifazat Nagar, and Moulana Mohsin Sahab, former Muazzin of Masjid e Aaisha Qadeem Hifazat Nagar.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="gallery" class="page">
-            <div class="gallery">
-                <h2>Our Gallery</h2>
-                <div class="gallery-grid">
-                    <div class="gallery-card">
-                        <img src="https://markazeislami.com/wp-content/uploads/2024/08/img08.jpeg" alt="Masjid Exterior">
-                        <p>Masjid Exterior</p>
-                    </div>
-                    <div class="gallery-card">
-                        <img src="https://markazeislami.com/wp-content/uploads/2024/08/staffQuarters.jpg" alt="Prayer Hall">
-                        <p>Prayer Hall</p>
-                    </div>
-                    <div class="gallery-card">
-                        <img src="https://markazeislami.com/wp-content/uploads/2024/08/img04.jpeg" alt="Library">
-                        <p>Library</p>
-                    </div>
-                    <div class="gallery-card">
-                        <img src="https://markazeislami.com/wp-content/uploads/2024/08/img06.jpeg" alt="Classroom">
-                        <p>Classroom</p>
-                    </div>
-                    <div class="gallery-card">
-                        <img src="https://markazeislami.com/wp-content/uploads/2024/08/img04.jpeg" alt="Annual Gathering">
-                        <p>Annual Gathering</p>
-                    </div>
-                    <div class="gallery-card">
-                        <img src="https://markazeislami.com/wp-content/uploads/2024/08/img02.jpeg" alt="Naat Event">
-                        <p>Naat Event</p>
-                    </div>
-                    <div class="gallery-card">
-                        <img src="https://markazeislami.com/wp-content/uploads/2024/08/img05.jpeg" alt="Students">
-                        <p>Students</p>
-                    </div>
-                    <div class="gallery-card">
-                        <img src="https://markazeislami.com/wp-content/uploads/2024/08/img07.jpeg" alt="Hostel">
-                        <p>Hostel</p>
-                    </div>
-                    <div class="gallery-card">
-                        <img src="https://markazeislami.com/wp-content/uploads/2024/08/Intro.jpg" alt="Community Event">
-                        <p>Community Event</p>
-                    </div>
-                    <div class="gallery-card">
-                        <img src="https://markazeislami.com/wp-content/uploads/2024/08/Intro1.jpg" alt="Islamic Seminar">
-                        <p>Islamic Seminar</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="donation" class="page">
-            <div class="donation">
-                <h2>Donate</h2>
-                <div class="content">
-                    <p>Masjid e Aaisha Qadeem Hifazat Nagar’s various charitable activities are financed by contributions given by generous people.</p>
-                    <p>Masjid e Aaisha Qadeem Hifazat Nagar accepts all sorts of contributions that are appropriate to its mission such as donations, Zakat (Islamic alms), Waqf, Sadaqa, grants, gifts, and bequests made for its favor.</p>
-                    <p>Masjid e Aaisha Qadeem Hifazat Nagar also accepts designated contributions for specific purposes such as: sponsoring orphans or a specific project such as building mosques, health clinic, drilling a well, and the like.</p>
-                    <p>The money given to us in charity is used for the specific purpose in case the donor specifies the purpose such as building a mosque and Madrasah or digging the borehole or feeding the children etc. or else it will be used wherever it is most needed for the cause of Masjid e Aaisha Qadeem Hifazat Nagar if purpose not specified.</p>
-                    <p>You can donate to the Masjid by below mentioned Bank Account:</p>
-                    <h3>For Indian Donors</h3>
-                    <p>Bank Name: Union Bank of India<br>Account Name: SHEIKH KEFAYTULLA<br>Account Number: 394902120001022<br>IFSC Code: UBIN0539490<br>Branch Name: UMFB ANKLESHWAR</p>
-                    <p>UPI ID: sheikhkefaytulla@naviaxis</p>
-                    <img src="https://i.ibb.co/HT9FRRsJ/1000108791-removebg-preview.png" alt="UPI QR Code" style="max-width: 100%; height: auto; margin-top: 10px;">
-                    <p>Jazakallah Khair</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="contact" class="page">
-    <div class="contact">
-        <h2>Contact Us</h2>
-        <div class="contact-details">
-            <h3>Contact Masjid Committee</h3>
-            <p class="english">Moulana Jarrar Sahab Palanpuri<br>Imam, Masjid e Aaisha Qadeem Hifazat Nagar<br>Phone: +91 9876543210<br>Email: imamjarrar@masjid.org</p>
-            <p class="urdu">مولانا جرار صاحب پالنپوری<br>امام، مسجد عائشہ قدیم حفاظت نگر<br>فون: +91 9876543210<br>ای میل: imamjarrar@masjid.org</p>
-            <p class="gujarati">મૌલાના જર્રાર સાહબ પાલનપુરી<br>ઇમામ, મસ્જિદ એ આઇશા કદીમ હિફાઝત નગર<br>ફોન: +91 9876543210<br>ઇમેઇલ: imamjarrar@masjid.org</p>
-            <p class="english">Haji Iftikhar Sahab<br>Committee President<br>Phone: +91 9123456789<br>Email: president@masjid.org</p>
-            <p class="urdu">حاجی افتخار صاحب<br>کمیٹی صدر<br>فون: +91 9123456789<br>ای میل: president@masjid.org</p>
-            <p class="gujarati">હાજી ઇફ્તિખાર સાહબ<br>કમિટી પ્રમુખ<br>ફોન: +91 9123456789<br>ઇમેઇલ: president@masjid.org</p>
-            <p class="english">Address: Masjid e Aaisha Qadeem, Hifazat Nagar, Ankleshwar, Gujarat, India - 393001</p>
-            <p class="urdu">پتہ: مسجد عائشہ قدیم، حفاظت نگر، انکلیشور، گجرات، بھارت - 393001</p>
-            <p class="gujarati">સરનામું: મસ્જિદ એ આઇશા કદીમ, હિફાઝત નગર, અંકલેશ્વર, ગુજરાત, ભારત - 393001</p>
-        </div>
-        <form id="contactForm" onsubmit="handleContact(event)">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required placeholder="Enter your name">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="Enter your email">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" required placeholder="Enter your message"></textarea>
-            <button type="submit">Send Message</button>
-        </form>
+  </nav>
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Masjid e Aaisha Qadeem</h1>
+      <p>"Indeed, the mosques of Allah are only to be maintained by those who believe in Allah and the Last Day..." (Qur'an 9:18)</p>
     </div>
-</div>
-
-<div id="profile" class="page">
-    <div class="profile">
-        <h2>Profile</h2>
-        <div class="profile-card">
-            <img src="https://i.ibb.co/r2ZPHbC/SHAIKH-KEFAYTULLA-1.jpg" alt="Profile Image" class="profile-img">
-            <h3>Shaikh Kefaytulla</h3>
-            <p class="designation">Administrator, Masjid e Aaisha Qadeem Hifazat Nagar</p>
-            <div class="profile-details">
-                <p><i class="fas fa-phone"></i> +91 9876543210</p>
-                <p><i class="fas fa-envelope"></i> admin@masjid.org</p>
-                <p><i class="fas fa-map-marker-alt"></i> Hifazat Nagar, Ankleshwar, Gujarat, India</p>
-            </div>
-            <div class="profile-bio">
-                <p>Shaikh Kefaytulla has been serving as the Administrator of Masjid e Aaisha Qadeem Hifazat Nagar since 2010. With a deep commitment to Islamic education and community welfare, he oversees the masjid’s operations, educational programs, and charitable initiatives. His leadership has been instrumental in expanding the institution’s reach and impact in Ankleshwar.</p>
-            </div>
-            <button onclick="openEditProfilePanel()">Edit Profile</button>
+    <img src="" alt="" class="hero-ayat-img">
+  </div>
+  <section id="prayer" class="section">
+    <h2>Today <span class="hideable">Prayer</span> Times</h2>
+    <div class="prayer-times">
+      <h3>Prayer Times</h3>
+      <div class="prayer-item">
+        <i class="fas fa-sun"></i>
+        <div class="prayer-name">فجر - Fajr</div>
+        <div class="time-labels">
+          <span class="prayer-time azan">05:30 AM</span>
+          <span class="prayer-time jamat">05:30 AM</span>
         </div>
-    </div>
-</div>
-
-<div id="settings" class="page">
-    <div class="settings">
-        <h2>Settings</h2>
-        <div class="settings-grid">
-            <div class="settings-card">
-                <i class="fas fa-moon"></i>
-                <div class="content">
-                    <h3>Dark Mode</h3>
-                    <p>Toggle between light and dark themes.</p>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-            <div class="settings-card">
-                <i class="fas fa-language"></i>
-                <div class="content">
-                    <h3>Language</h3>
-                    <p>Change the app language.</p>
-                    <form class="settings-form" id="languageForm" onsubmit="handleLanguageChange(event)">
-                        <select id="language" name="language" onchange="this.form.submit()">
-                            <option value="en">English</option>
-                            <option value="ur">Urdu</option>
-                            <option value="gu">Gujarati</option>
-                        </select>
-                    </form>
-                </div>
-            </div>
-            <div class="settings-card">
-                <i class="fas fa-bell"></i>
-                <div class="content">
-                    <h3>Notifications</h3>
-                    <p>Manage notification preferences.</p>
-                    <form class="settings-form" id="notificationForm" onsubmit="handleNotificationChange(event)">
-                        <label for="prayerNotifications">Prayer Time Notifications</label>
-                        <input type="prayer-checkbox" id="checkbox">
--checkbox" name="prayerNotifications">
-                        <label for="noticeNotifications">Notice Board Updates</label>
-                        <input type="checkbox" id="notice-checkbox" name="noticeNotifications">
-                        <button type="submit">Save</button>
-                    </form>
-                </div>
-            </div>
-            <div class="settings-card">
-                <i class="fas fa-users"></i>
-                <div class="content">
-                    <h3>Invite Friends</h3>
-                    <p>Share the app with others.</p>
-                    <button onclick="shareApp()">Invite Now</button>
-                </div>
-            </div>
-            <div class="settings-card">
-                <i class="fas fa-video"></i>
-                <div class="content">
-                    <h3>Manage Videos</h3>
-                    <p>Add or update the video gallery.</p>
-                    <button onclick="openEditVideoPanel()">Manage Now</button>
-                </div>
-            </div>
+      </div>
+      <div class="prayer-item">
+        <i class="fas fa-sun"></i>
+        <div class="prayer-name">ظهر - Zuhr</div>
+        <div class="time-labels">
+          <span class="prayer-time azan">01:10 PM</span>
+          <span class="prayer-time jamat">01:30 PM</span>
         </div>
+      </div>
+      <div class="prayer-item">
+        <i class="fas fa-cloud-sun"></i>
+        <div class="prayer-name">عصر - Asr</div>
+        <div class="time-labels">
+          <span class="prayer-time azan">04:30 PM</span>
+          <span class="prayer-time jamat">04:00 PM</span>
+        </div>
+      </div>
+      <div class="prayer-item">
+        <i class="fas fa-cloud-sun"></i>
+        <div class="prayer-name">مغرب - Maghrib</div>
+        <div class="time-labels">
+          <span class="prayer-time azan">07:18 PM</span>
+          <span class="prayer-time jamat">07:20 PM</span>
+        </div>
+      </div>
+      <div class="prayer-item">
+        <i class="fas fa-moon"></i>
+        <div class="prayer-name">عشاء - Isha</div>
+        <div class="time-labels">
+          <span class="prayer-time azan">08:50 PM</span>
+          <span class="prayer-time jamat">09:00 PM</span>
+        </div>
+      </div>
+      <div class="prayer-item">
+        <i class="fas fa-mosque"></i>
+        <div class="prayer-name">جمعمر - Jumma</div>
+        <div class="time-labels">
+          <span class="prayer-time azan">01:30 PM</span>
+          <span class="prayer-time jamat">05:00 PM</span>
+        </div>
+      </div>
+      <div class="last-updated">
+        Timings Last changed on - آخر بار تبدیلی
+        <br>30/06/25
+      </div>
     </div>
-</div>
-
-<div class="bottom-nav">
-    <a href="#" onclick="showPage('home')" class="active"><i class="fas fa-home"></i>Home</a>
-    <a href="#" onclick="showPage('maktab')"><i class="fas fa-book"></i>Maktab</a>
-    <a href="#" onclick="showPage('donation')"><i class="fas fa-donate"></i>Donation</a>
-    <a href="#" onclick="showPage('contact')"><i class="fas fa-address-book"></i>Contact</a>
-</div>
-
-<script>
-    let currentSlide = 0;
-    let currentNotice = 0;
-    let currentPrayerCard = 0;
-    const prayerCards = ['fajr-card', 'dhuhr-card', 'asr-card', 'maghrib-card', 'isha-card'];
-
-    document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-            document.getElementById('splashScreen').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
-        }, 3000);
-
-        startCarousel();
-        startNoticeCarousel();
-        startPrayerCardRotation();
-        loadProfile();
-        loadDarkModePreference();
-        loadLanguagePreference();
-        loadNotificationPreferences();
+    <div class="update-panel" id="updatePanel">
+      <button class="close-panel" onclick="closePanel()">Close</button>
+      <div class="password-section">
+        <input type="password" id="passwordInput" placeholder="Enter Password">
+        <button onclick="checkPassword()">Confirm</button>
+      </div>
+      <div class="update-item">
+        <span>Fajr</span>
+        <input type="time" id="fajrAzan" value="05:30">
+        <input type="time" id="fajrJamat" value="05:30">
+      </div>
+      <div class="update-item">
+        <span>Zuhr</span>
+        <input type="time" id="zuhrAzan" value="13:10">
+        <input type="time" id="zuhrJamat" value="13:30">
+      </div>
+      <div class="update-item">
+        <span>Asr</span>
+        <input type="time" id="asrAzan" value="16:00">
+        <input type="time" id="asrJamat" value="13:00">
+      </div>
+      <div class="update-item">
+        <span>Maghrib</span>
+        <input type="time" id="maghribAzan" value="19:18">
+        <input type="time" id="maghribJamat" value="19:20">
+      </div>
+      <div class="update-item">
+        <span>Isha</span>
+        <input type="time" id="ishaJamat" value="01:00">
+        <input type="time" id="ishaAzan" value="20:50">
+      </div>
+      <div class="update-item">
+        <span>Jumma</span>
+        <input type="time" id="jummaAzan" value="13:30">
+        <input type="time" id="jummaJamat" value="17:00">
+      </div>
+      <button class="submit-button" onclick="saveUpdates()">Submit</button>
+    </div>
+  </section>
+  <section id="donation" class="section">
+    <h2>Support Us <span class="donation-toggle hideable"><i class="fas fa-hand-holding-usd"></i></span></h2>
+    <div class="donation-panel" id="donationPanel">
+      <button class="close-panel" onclick="closeDonationPanel()">Close</button>
+      <div class="donation-form">
+        <input type="text" id="donorName" placeholder="Enter Full Name" required>
+        <input type="email" id="donorEmail" placeholder="Enter Email" required>
+        <input type="number" id="donationAmount" placeholder="Enter Amount (INR)" min="1" required>
+        <select id="paymentMethod" required>
+          <option value="" disabled selected>Select Payment Method</option>
+          <option value="UPI">UPI</option>
+          <option value="Bank Transfer">Bank Transfer</option>
+          <option value="Cash">Cash</option>
+        </select>
+        <button onclick="confirmDonation()">Confirm Payment</button>
+      </div>
+    </div>
+  </section>
+  <section id="visit" class="section">
+    <h2>Visit Us</h2>
+    <div class="info-card">
+      <a href="https://maps.app.goo.gl/AmHnREpYKT4s6trj8" target="_blank" aria-label="Open location in Google Maps">
+        <i class="fas fa-map-marker"></i>
+      </a>
+      <p>Address: Hifazat Nagar, Rajpipla Road, Sarangpur, Ankleshwar, Bharuch, Gujarat – 393001</p>
+    </div>
+  </section>
+  <section id="about" class="section">
+    <h2>About</h2>
+    <div class="info-card">
+      <p>Urdu: مسجد عائشہ قدیم حفاظت نگر انکلیشور</p>
+      <p>Established: 1984</p>
+      <p>Masjid e Aaisha Qadeem has served as a center for prayer, community gatherings, Islamic education, and local welfare since 1984. Located in the heart of Hifazat Nagar, it remains active under the guidance of a dedicated committee and Imam</p>
+    </div>
+  </section>
+  <section id="gallery" class="section">
+    <h2>Masjid Gallery</h2>
+    <div class="gallery-grid">
+      <img src="https://i.ibb.co/VWWjZkZx/IMG20250506105156.jpg" alt="Masjid Exterior" onclick="openImageModal(this.src)">
+      <img src="https://i.ibb.co/ymxRZfZt/IMG20250501202755.jpg" alt="Prayer Hall" onclick="openImageModal(this.src)">
+      <img src="https://i.ibb.co/ccDkpRKY/IMG20250427115506.jpg" alt="Community Event" onclick="openImageModal(this.src)">
+      <img src="https://i.ibb.co/0pjCq1nd/IMG20250427115452.jpg" alt="Minaret View" onclick="openImageModal(this.src)">
+    </div>
+    <div class="image-modal" id="imageModal">
+      <div class="modal-content">
+        <img src="" alt="Full-screen image" id="modalImage">
+        <button class="close-btn" onclick="closeImageModal()">Close</button>
+      </div>
+    </div>
+  </section>
+  <footer id="footer">
+    <p>Imam: Moulana Jarrar Sahab | President: Haji Iftikhar Sahab | Committee: Haji Irfan Sahab, Hafiz Abdul Aleem Sahab</p>
+    <p>Phone: <a href="https://wa.me/+919601137181?text=Assalamu%20Alaikum!%20I%20would%20like%20to%20inquire%20about%20Masjid%20e%20Aaisha%20Qadeem.%20Could%20you%20please%20provide%20more%20information%20or%20assist%20me%20with%20my%20query?%20JazakAllah%20Khair!" target="_blank" aria-label="Contact via WhatsApp">+919601137181</a> | Email: <a href="mailto:masjideaq@islamicorg.com?subject=Inquiry%20About%20Masjid%20e%20Aaisha%20Qadeem&body=Assalamu%20Alaikum,%20I%20am%20reaching%20out%20to%20learn%20more%20about%20Masjid%20e%20Aaisha%20Qadeem.%20Could%20you%20please%20provide%20additional%20details%20or%20assist%20with%20my%20questions?%20JazakAllah%20Khair!" aria-label="Email Masjid e Aaisha Qadeem">masjideaq@islamicorg.com</a></p>
+    <p>Developed by Saood & Kifayat for the sake of Allah ﷻ</p>
+    <div class="social-icons">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
+  <script>
+    function openImageModal(src) {
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      modalImage.src = src;
+      modal.style.display = 'flex';
+    }
+    function closeImageModal() {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+    }
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // Stop observing once visible
+        }
+      });
+    }, { threshold: 0.01 }); // Lower threshold for better sensitivity
+    sections.forEach(section => {
+      observer.observe(section);
+      // Fallback to make sections visible after 1 second if observer fails
+      setTimeout(() => {
+        if (!section.classList.contains('visible')) {
+          section.classList.add('visible');
+        }
+      }, 1000);
     });
 
-    function startCarousel() {
-        setInterval(() => {
-            moveCarousel(1);
-        }, 5000);
-    }
-
-    function moveCarousel(direction) {
-        const carousel = document.querySelector('.carousel');
-        const slides = document.querySelectorAll('.carousel-slide').length;
-        currentSlide = (currentSlide + direction + slides) % slides;
-        carousel.style.transform = `translateX(-${currentSlide * (100 / slides)}%)`;
-    }
-
-    function startNoticeCarousel() {
-        setInterval(() => {
-            moveNoticeCarousel(1);
-        }, 8000);
-    }
-
-    function moveNoticeCarousel(direction) {
-        const noticeCarousel = document.querySelector('.notice-carousel');
-        const notices = document.querySelectorAll('.notice-slide').length;
-        currentNotice = (currentNotice + direction + notices) % notices;
-        noticeCarousel.style.transform = `translateX(-${currentNotice * (100 / notices)}%)`;
-    }
-
-    function startPrayerCardRotation() {
-        setInterval(() => {
-            rotatePrayerCard(1);
-        }, 5000);
-    }
-
-    function rotatePrayerCard(direction) {
-        document.getElementById(prayerCards[currentPrayerCard]).classList.remove('active');
-        currentPrayerCard = (currentPrayerCard + direction + prayerCards.length) % prayerCards.length;
-        document.getElementById(prayerCards[currentPrayerCard]).classList.add('active');
-        document.getElementById(prayerCards[currentPrayerCard]).style.display = 'block';
-        prayerCards.forEach((card, index) => {
-            if (index !== currentPrayerCard) {
-                document.getElementById(card).style.display = 'none';
-            }
+    document.querySelectorAll('.nav-buttons a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        window.scrollTo({
+          top: targetElement.offsetTop - 70,
+          behavior: 'smooth'
         });
-    }
+      });
+    });
 
-    function toggleSideMenu() {
-        const sideMenu = document.getElementById('sideMenu');
-        sideMenu.classList.toggle('active');
-    }
-
-    function showPage(pageId, fromSideMenu = false) {
-        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-
-        document.querySelectorAll('.bottom-nav a').forEach(link => link.classList.remove('active'));
-        document.querySelector(`.bottom-nav a[onclick="showPage('${pageId}')"]`)?.classList.add('active');
-
-        document.querySelectorAll('.side-menu ul li a').forEach(link => link.classList.remove('active'));
-        document.querySelector(`.side-menu ul li a[onclick="showPage('${pageId}')"]`)?.classList.add('active');
-
-        // Only toggle side menu if the page is opened from the side menu
-        if (fromSideMenu) {
-            toggleSideMenu();
+    function loadSavedTimes() {
+      const savedTimes = JSON.parse(localStorage.getItem('prayerTimes')) || {};
+      document.querySelectorAll('.prayer-item').forEach(item => {
+        const prayerName = item.querySelector('.prayer-name').textContent.split(' - ')[1].trim();
+        if (savedTimes[prayerName]) {
+          item.querySelector('.azan').textContent = savedTimes[prayerName].azan;
+          item.querySelector('.jamat').textContent = savedTimes[prayerName].jamat;
         }
+      });
+      const lastUpdated = document.querySelector('.last-updated');
+      lastUpdated.textContent = localStorage.getItem('lastUpdated') || 'Timings Last changed on - آخر بار تبدیلی\n30/06/25';
     }
 
-    function toggleEditPanel() {
-        const editPanel = document.getElementById('editPanel');
-        editPanel.classList.toggle('active');
-        if (editPanel.classList.contains('active')) {
-            populateTimeInputs();
-        }
+    function to12HourFormat(time24) {
+      const [hours, minutes] = time24.split(':');
+      let hoursInt = parseInt(hours, 10);
+      const period = hoursInt >= 12 ? 'PM' : 'AM';
+      hoursInt = hoursInt % 12 || 12;
+      return `${hoursInt}:${minutes.padStart(2, '0')} ${period}`;
     }
 
-    function populateTimeInputs() {
-        const timeInputs = document.getElementById('timeInputs');
-        timeInputs.innerHTML = '';
-        const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-        prayers.forEach(prayer => {
-            timeInputs.innerHTML += `
-                <div>
-                    <label for="${prayer}-azan">${prayer.charAt(0).toUpperCase() + prayer.slice(1)} Azan</label>
-                    <input type="time" id="${prayer}-azan-input" value="${document.getElementById(`${prayer}-azan`).textContent}">
-                    <label for="${prayer}-jamaat">${prayer.charAt(0).toUpperCase() + prayer.slice(1)} Jamaat</label>
-                    <input type="time" id="${prayer}-jamaat-input" value="${document.getElementById(`${prayer}-jamaat`).textContent}">
-                </div>
-            `;
-        });
-    }
-
-    function verifyPassword() {
-        const password = document.getElementById('editPassword').value;
-        if (password === 'admin123') {
-            document.getElementById('saveButton').style.display = 'block';
-            document.querySelector('.password-section').style.display = 'none';
-        } else {
-            alert('Incorrect password!');
-        }
+    function to24HourFormat(time12) {
+      const [time, period] = time12.split(' ');
+      let [hours, minutes] = time.split(':');
+      hours = parseInt(hours, 10);
+      if (period === 'PM' && hours !== 12) hours += 12;
+      if (period === 'AM' && hours === 12) hours = 0;
+      return `${hours.toString().padStart(2, '0')}:${minutes}`;
     }
 
     function saveTimes() {
-        const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-        prayers.forEach(prayer => {
-            const azanTime = document.getElementById(`${prayer}-azan-input`).value;
-            const jamaatTime = document.getElementById(`${prayer}-jamaat-input`).value;
-            document.getElementById(`${prayer}-azan`).textContent = azanTime;
-            document.getElementById(`${prayer}-jamaat`).textContent = jamaatTime;
+      const prayerTimes = {};
+      document.querySelectorAll('.prayer-item').forEach(item => {
+        const prayerName = item.querySelector('.prayer-name').textContent.split(' - ')[1].trim();
+        prayerTimes[prayerName] = {
+          azan: item.querySelector('.azan').textContent,
+          jamat: item.querySelector('.jamat').textContent
+        };
+      });
+      const now = new Date();
+      localStorage.setItem('prayerTimes', JSON.stringify(prayerTimes));
+      localStorage.setItem('lastUpdated', `Timings Last changed on - آخر بار تبدیلی\n${now.toLocaleDateString('en-GB')}`);
+      document.querySelector('.last-updated').textContent = localStorage.getItem('lastUpdated');
+    }
+
+    loadSavedTimes();
+
+    const prayerText = document.querySelector('.hideable');
+    let panelOpen = false;
+    prayerText.addEventListener('click', () => {
+      const panel = document.getElementById('updatePanel');
+      if (!panelOpen) {
+        panel.classList.add('active');
+        panelOpen = true;
+      } else {
+        panel.classList.remove('active');
+        panelOpen = false;
+      }
+    });
+
+    function closePanel() {
+      const panel = document.getElementById('updatePanel');
+      panel.classList.remove('active');
+      panelOpen = false;
+      document.querySelector('.password-section').style.display = 'flex';
+      document.querySelectorAll('.update-item').forEach(item => item.classList.remove('active'));
+      document.querySelector('.submit-button').classList.remove('active');
+    }
+
+    function checkPassword() {
+      const passwordInput = document.getElementById('passwordInput').value;
+      const correctPassword = '2580';
+      if (passwordInput === correctPassword) {
+        document.querySelector('.password-section').style.display = 'none';
+        document.querySelectorAll('.update-item').forEach(item => item.classList.add('active'));
+        document.querySelector('.submit-button').classList.add('active');
+      } else {
+        alert('Incorrect password!');
+      }
+    }
+
+    function saveUpdates() {
+      const fajrAzan = document.getElementById('fajrAzan').value;
+      const fajrJamat = document.getElementById('fajrJamat').value;
+      const zuhrAzan = document.getElementById('zuhrAzan').value;
+      const zuhrJamat = document.getElementById('zuhrJamat').value;
+      const asrAzan = document.getElementById('asrAzan').value;
+      const asrJamat = document.getElementById('asrJamat').value;
+      const maghribAzan = document.getElementById('maghribAzan').value;
+      const maghribJamat = document.getElementById('maghribJamat').value;
+      const ishaAzan = document.getElementById('ishaAzan').value;
+      const ishaJamat = document.getElementById('ishaJamat').value;
+      const jummaAzan = document.getElementById('jummaAzan').value;
+      const jummaJamat = document.getElementById('jummaJamat').value;
+
+      document.querySelectorAll('.prayer-item').forEach(item => {
+        const prayerName = item.querySelector('.prayer-name').textContent.split(' - ')[1].trim();
+        if (prayerName === 'Fajr') {
+          item.querySelector('.azan').textContent = to12HourFormat(fajrAzan);
+          item.querySelector('.jamat').textContent = to12HourFormat(fajrJamat);
+        } else if (prayerName === 'Zuhr') {
+          item.querySelector('.azan').textContent = to12HourFormat(zuhrAzan);
+          item.querySelector('.jamat').textContent = to12HourFormat(zuhrJamat);
+        } else if (prayerName === 'Asr') {
+          item.querySelector('.azan').textContent = to12HourFormat(asrAzan);
+          item.querySelector('.jamat').textContent = to12HourFormat(asrJamat);
+        } else if (prayerName === 'Maghrib') {
+          item.querySelector('.azan').textContent = to12HourFormat(maghribAzan);
+          item.querySelector('.jamat').textContent = to12HourFormat(maghribJamat);
+        } else if (prayerName === 'Isha') {
+          item.querySelector('.azan').textContent = to12HourFormat(ishaAzan);
+          item.querySelector('.jamat').textContent = to12HourFormat(ishaJamat);
+        } else if (prayerName === 'Jumma') {
+          item.querySelector('.azan').textContent = to12HourFormat(jummaAzan);
+          item.querySelector('.jamat').textContent = to12HourFormat(jummaJamat);
+        }
+      });
+
+      saveTimes();
+      alert('Prayer Times updated successfully!');
+      closePanel();
+    }
+
+    // Donation Panel Functions
+    let donationPanelOpen = false;
+    const donationToggle = document.querySelector('.donation-toggle');
+    donationToggle.addEventListener('click', () => {
+      const panel = document.getElementById('donationPanel');
+      if (!donationPanelOpen) {
+        panel.classList.add('active');
+        donationPanelOpen = true;
+      } else {
+        panel.classList.remove('active');
+        donationPanelOpen = false;
+      }
+    });
+
+    function closeDonationPanel() {
+      const panel = document.getElementById('donationPanel');
+      panel.classList.remove('active');
+      donationPanelOpen = false;
+      document.getElementById('donorName').value = '';
+      document.getElementById('donorEmail').value = '';
+      document.getElementById('donationAmount').value = '';
+      document.getElementById('paymentMethod').value = '';
+    }
+
+    function confirmDonation() {
+      const donorName = document.getElementById('donorName').value;
+      const donorEmail = document.getElementById('donorEmail').value;
+      const donationAmount = document.getElementById('donationAmount').value;
+      const paymentMethod = document.getElementById('paymentMethod').value;
+
+      if (!donorName || !donorEmail || !donationAmount || !paymentMethod) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      // Generate unique donation ID
+      const donationId = 'MASJID-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+      const donationDate = new Date().toLocaleString('en-GB');
+
+      // Generate QR code for donation details
+      const qrText = `Donation ID: ${donationId}\nDonor: ${donorName}\nAmount: INR ${donationAmount}\nDate: ${donationDate}`;
+      const qrCanvas = document.createElement('canvas');
+      QRCode.toCanvas(qrCanvas, qrText, { width: 100 }, function (error) {
+        if (error) console.error(error);
+      });
+
+      // Generate PDF with new design
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Colors (matching CSS variables)
+      const primaryColor = '#5C829A';
+      const secondaryColor = '#D4C7A1';
+
+      // Function to load and add images to PDF
+      function loadImage(src) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.crossOrigin = 'Anonymous';
+          img.src = src;
+          img.onload = () => resolve(img);
+          img.onerror = reject;
         });
-        toggleEditPanel();
-        alert('Prayer times updated successfully!');
+      }
+
+      // Load all images
+      Promise.all([
+        loadImage('https://i.ibb.co/mrq86dPd/20250621-220342.png'), // Logo
+        loadImage('https://i.ibb.co/VWWjZkZx/IMG20250506105156.jpg'), // Image 1
+        loadImage('https://i.ibb.co/ymxRZfZt/IMG20250501202755.jpg'), // Image 2
+        loadImage('https://i.ibb.co/ccDkpRKY/IMG20250427115506.jpg')  // Image 3
+      ]).then(([logo, img1, img2, img3]) => {
+        // Page border
+        doc.setDrawColor(primaryColor);
+        doc.setLineWidth(1);
+        doc.rect(5, 5, 200, 287, 'S');
+
+        // Header: Logo on the left, slightly higher
+        doc.addImage(logo, 'PNG', 10, 5, 40, 40); // y=5
+
+        // Header: Masjid name and address centered
+        doc.setFont('Amiri', 'normal');
+        doc.setFontSize(22);
+        doc.setTextColor(primaryColor);
+        doc.text('Masjid e Aaisha Qadeem', 105, 20, { align: 'center' });
+        doc.setFont('Roboto', 'normal');
+        doc.setFontSize(12);
+        doc.setTextColor('#333333');
+        doc.text('Hifazat Nagar, Rajpipla Road, Sarangpur,', 105, 30, { align: 'center' });
+        doc.text('Ankleshwar, Bharuch, Gujarat – 393001', 105, 37, { align: 'center' });
+
+        // Simple horizontal line
+        doc.setDrawColor(secondaryColor);
+        doc.setLineWidth(0.5);
+        doc.line(30, 45, 180, 45);
+
+        // Donation details section
+        doc.setFont('Roboto', 'normal');
+        doc.setFontSize(12);
+        doc.setTextColor('#333333');
+        doc.setFillColor('#F8F8F8');
+        doc.rect(10, 55, 190, 120, 'F'); // Background for details
+
+        // Details in a table-like format
+        doc.setFontSize(14);
+        doc.setTextColor(primaryColor);
+        doc.text('Donation Receipt', 15, 65);
+        doc.setLineWidth(0.5);
+        doc.line(15, 67, 65, 67); // Underline for title
+
+        doc.setFontSize(12);
+        doc.setTextColor('#333333');
+        doc.text(`Donation ID:`, 15, 80);
+        doc.text(donationId, 60, 80);
+        doc.text(`Donor Name:`, 15, 90);
+        doc.text(donorName, 60, 90);
+        doc.text(`Email:`, 15, 100);
+        doc.text(donorEmail, 60, 100);
+        doc.text(`Amount:`, 15, 110);
+        doc.text(`INR ${donationAmount}`, 60, 110);
+        doc.text(`Payment Method:`, 15, 120);
+        doc.text(paymentMethod, 60, 120);
+        doc.text(`Date:`, 15, 130);
+        doc.text(donationDate, 60, 130);
+
+        // Add QR code
+        const qrDataUrl = qrCanvas.toDataURL('image/png');
+        doc.addImage(qrDataUrl, 'PNG', 140, 85, 50, 50);
+
+        // Add three Masjid images below donation details
+        doc.addImage(img1, 'JPEG', 15, 180, 50, 50); // Image 1
+        doc.addImage(img2, 'JPEG', 75, 180, 50, 50); // Image 2
+        doc.addImage(img3, 'JPEG', 135, 180, 50, 50); // Image 3
+
+        // Thank-you message at the bottom (Arabic removed)
+        doc.setFont('Amiri', 'normal');
+        doc.setFontSize(12);
+        doc.setTextColor(primaryColor);
+        doc.setFillColor(secondaryColor);
+        doc.rect(10, 260, 190, 20, 'F'); // Adjusted height for single language
+        doc.text('Your generous donation strengthens our community and supports', 105, 270, { align: 'center' });
+        doc.text('the mission of Masjid e Aaisha Qadeem. JazakAllah Khair!', 105, 277, { align: 'center' });
+
+        // Save PDF
+        doc.save(`Donation_Receipt_${donationId}.pdf`);
+      }).catch(error => {
+        console.error('Error loading images:', error);
+        alert('Failed to load images for the PDF. Please try again.');
+      });
+
+      // Show success message
+      alert(`Thank you, ${donorName}, for your donation of INR ${donationAmount}! A receipt has been generated.`);
+
+      // Close panel and reset form
+      closeDonationPanel();
     }
 
-    function openEditProfilePanel() {
-        const editProfilePanel = document.getElementById('editProfilePanel');
-        editProfilePanel.classList.add('active');
-
-        document.getElementById('profileName').value = document.querySelector('.profile-card h3').textContent;
-        document.getElementById('profileMobile').value = document.querySelector('.profile-details p:nth-child(1)').textContent.replace('+91 ', '');
-        document.getElementById('profileEmail').value = document.querySelector('.profile-details p:nth-child(2)').textContent;
-        document.getElementById('profileAddress').value = document.querySelector('.profile-details p:nth-child(3)').textContent;
-        document.getElementById('profileBio').value = document.querySelector('.profile-bio p').textContent;
-    }
-
-    function closeEditProfilePanel() {
-        document.getElementById('editProfilePanel').classList.remove('active');
-    }
-
-    function handleProfileUpdate(event) {
-        event.preventDefault();
-        const name = document.getElementById('profileName').value;
-        const mobile = document.getElementById('profileMobile').value;
-        const email = document.getElementById('profileEmail').value;
-        const address = document.getElementById('profileAddress').value;
-        const bio = document.getElementById('profileBio').value;
-
-        document.querySelector('.profile-card h3').textContent = name;
-        document.querySelector('.profile-details p:nth-child(1)').innerHTML = `<i class="fas fa-phone"></i> +91 ${mobile}`;
-        document.querySelector('.profile-details p:nth-child(2)').innerHTML = `<i class="fas fa-envelope"></i> ${email}`;
-        document.querySelector('.profile-details p:nth-child(3)').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${address}`;
-        document.querySelector('.profile-bio p').textContent = bio;
-
-        const file = document.getElementById('profilePhoto').files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.querySelector('.profile-img').src = e.target.result;
-                document.getElementById('photoPreview').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        closeEditProfilePanel();
-        alert('Profile updated successfully!');
-    }
-
-    function previewProfilePhoto(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('photoPreview').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    function openEditVideoPanel() {
-        document.getElementById('editVideoPanel').classList.add('active');
-    }
-
-    function closeEditVideoPanel() {
-        document.getElementById('editVideoPanel').classList.remove('active');
-    }
-
-    function handleVideoUpdate(event) {
-        event.preventDefault();
-        const videoFile = document.getElementById('videoFile').files[0];
-        const videoLink = document.getElementById('videoLink').value;
-        const description = document.getElementById('videoDescription').value;
-
-        const videoGrid = document.getElementById('videoGrid');
-        const videoCard = document.createElement('div');
-        videoCard.className = 'video-card';
-
-        if (videoFile) {
-            const videoUrl = URL.createObjectURL(videoFile);
-            videoCard.innerHTML = `
-                <video controls>
-                    <source src="${videoUrl}" type="${videoFile.type}">
-                </video>
-                <p>${description}</p>
-            `;
-        } else if (videoLink) {
-            const videoId = extractYouTubeId(videoLink);
-            videoCard.innerHTML = `
-                <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-                <p>${description}</p>
-            `;
-        }
-
-        videoGrid.prepend(videoCard);
-        closeEditVideoPanel();
-        alert('Video added successfully!');
-    }
-
-    function extractYouTubeId(url) {
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-        const match = url.match(regExp);
-        return (match && match[2].length === 11) ? match[2] : null;
-    }
-
-    function handleAdmission(event) {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const data = Object.fromEntries(formData);
-        console.log('Admission Form Data:', data);
-        alert('Admission application submitted successfully!');
-        event.target.reset();
-    }
-
-    function handleContact(event) {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const data = Object.fromEntries(formData);
-        console.log('Contact Form Data:', data);
-        alert('Message sent successfully!');
-        event.target.reset();
-    }
-
-    function handleLanguageChange(event) {
-        event.preventDefault();
-        const language = document.getElementById('language').value;
-        localStorage.setItem('language', language);
-        alert(`Language changed to ${language}`);
-    }
-
-    function handleNotificationChange(event) {
-        event.preventDefault();
-        const prayerNotifications = document.getElementById('prayer-checkbox').checked;
-        const noticeNotifications = document.getElementById('notice-checkbox').checked;
-        localStorage.setItem('prayerNotifications', prayerNotifications);
-        localStorage.setItem('noticeNotifications', noticeNotifications);
-        alert('Notification preferences updated!');
-    }
-
-    function toggleDarkMode() {
-        const isDarkMode = document.getElementById('darkModeToggle').checked;
-        document.body.classList.toggle('dark-mode', isDarkMode);
-        localStorage.setItem('darkMode', isDarkMode);
-    }
-
-    function loadDarkModePreference() {
-        const isDarkMode = localStorage.getItem('darkMode') === 'true';
-        document.getElementById('darkModeToggle').checked = isDarkMode;
-        document.body.classList.toggle('dark-mode', isDarkMode);
-    }
-
-    function loadLanguagePreference() {
-        const language = localStorage.getItem('language') || 'en';
-        document.getElementById('language').value = language;
-    }
-
-    function loadNotificationPreferences() {
-        const prayerNotifications = localStorage.getItem('prayerNotifications') === 'true';
-        const noticeNotifications = localStorage.getItem('noticeNotifications') === 'true';
-        document.getElementById('prayer-checkbox').checked = prayerNotifications;
-        document.getElementById('notice-checkbox').checked = noticeNotifications;
-    }
-
-    function loadProfile() {
-        const savedProfile = localStorage.getItem('profile');
-        if (savedProfile) {
-            const profile = JSON.parse(savedProfile);
-            document.querySelector('.profile-card h3').textContent = profile.name || 'Shaikh Kefaytulla';
-            document.querySelector('.profile-details p:nth-child(1)').innerHTML = `<i class="fas fa-phone"></i> ${profile.mobile || '+91 9876543210'}`;
-            document.querySelector('.profile-details p:nth-child(2)').innerHTML = `<i class="fas fa-envelope"></i> ${profile.email || 'admin@masjid.org'}`;
-            document.querySelector('.profile-details p:nth-child(3)').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${profile.address || 'Hifazat Nagar, Ankleshwar, Gujarat, India'}`;
-            document.querySelector('.profile-bio p').textContent = profile.bio || 'Shaikh Kefaytulla has been serving as the Administrator of Masjid e Aaisha Qadeem Hifazat Nagar since 2010...';
-            if (profile.photo) {
-                document.querySelector('.profile-img').src = profile.photo;
-            }
-        }
-    }
-
-    function shareApp() {
-        if (navigator.share) {
-            navigator.share({
-                title: 'Masjid e Aaisha Qadeem Hifazat Nagar',
-                text: 'Join our community and explore the services of Masjid e Aaisha Qadeem Hifazat Nagar, Ankleshwar.',
-                url: window.location.href
-            }).catch(err => console.error('Error sharing:', err));
-        } else {
-            alert('Share this app via your device\'s sharing options!');
-        }
-    }
-</script>
+    console.log('Masjid e Aaisha Website loaded.');
+  </script>
 </body>
 </html>
