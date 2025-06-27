@@ -9,6 +9,8 @@
   <!-- Added jsPDF and QRCode libraries for PDF and QR code generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.1/qrcode.min.js"></script>
+  <!-- Added Razorpay checkout script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <style>
     :root {
       --primary: #5C829A;
@@ -511,7 +513,7 @@
       .hero { height: 50vh; }
       .hero-content h1 { font-size: 2.5rem; }
       .hero-content p { font-size: 1rem; }
-      .hero-ayat-img { width: 90%; }
+      .hero-ayat-img { iwidth: 90%; }
       .section { padding: 40px 20px; }
       .section h2 { font-size: 2rem; }
       .prayer-card h3 { font-size: 1.3rem; }
@@ -540,7 +542,7 @@
       }
       .nav-buttons a {
         font-size: 0.8rem;
-        padding: 5px 8px;
+    padding: 5px 8px;
       }
       .hero-content h1 { font-size: 2rem; }
       .hero-content p { font-size: 0.9rem; }
@@ -684,6 +686,7 @@
           <option value="UPI">UPI</option>
           <option value="Bank Transfer">Bank Transfer</option>
           <option value="Cash">Cash</option>
+          <option value="Razorpay">Razorpay (Online Payment)</option>
         </select>
         <button onclick="confirmDonation()">Confirm Payment</button>
       </div>
@@ -747,13 +750,12 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          observer.unobserve(entry.target); // Stop observing once visible
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.01 }); // Lower threshold for better sensitivity
+    }, { threshold: 0.01 });
     sections.forEach(section => {
       observer.observe(section);
-      // Fallback to make sections visible after 1 second if observer fails
       setTimeout(() => {
         if (!section.classList.contains('visible')) {
           section.classList.add('visible');
@@ -941,156 +943,191 @@
         return;
       }
 
-      // Generate unique donation ID (optional, can be removed if not needed)
+      // Generate unique donation ID
       const donationId = 'MASJID-' + Math.random().toString(36).substr(2, 9).toUpperCase();
 
-      // Generate PDF with custom size (210 mm x 250 mm)
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: [210, 250] // Custom size: 210 mm width, 250 mm height
-      });
+      // Function to generate PDF receipt
+      function generateReceipt(paymentId = 'N/A') {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: [210, 250]
+        });
 
-      // Colors (matching CSS variables)
-      const primaryColor = '#5C829A';
-      const secondaryColor = '#D4C7A1';
+        const primaryColor = '#5C829A';
+        const secondaryColor = '#D4C7A1';
 
-      // Function to load and add images to PDF
-      function loadImage(src) {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.crossOrigin = 'Anonymous';
-          img.src = src;
-          img.onload = () => resolve(img);
-          img.onerror = () => reject(new Error(`Failed to load image from ${src}`));
+        function loadImage(src) {
+          return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.src = src;
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error(`Failed to load image from ${src}`));
+          });
+        }
+
+        loadImage('https://i.ibb.co/mrq86dPd/20250621-220342.png').then(logo => {
+          doc.setDrawColor(primaryColor);
+          doc.setLineWidth(1);
+          doc.rect(5, 5, 200, 240, 'S');
+
+          doc.addImage(logo, 'PNG', 10, 2, 40, 40);
+
+          doc.setFont('Amiri', 'normal');
+          doc.setFontSize(20);
+          doc.setTextColor(primaryColor);
+          doc.text('Masjid e Aaisha Qadeem', 105, 18, { align: 'center' });
+          doc.setFont('Roboto', 'normal');
+          doc.setFontSize(11);
+          doc.setTextColor('#333333');
+          doc.text('Hifazat Nagar, Rajpipla Road, Sarangpur,', 105, 27, { align: 'center' });
+          doc.text('Ankleshwar, Bharuch, Gujarat – 393001', 105, 33, { align: 'center' });
+
+          doc.setDrawColor(secondaryColor);
+          doc.setLineWidth(0.5);
+          doc.line(30, 40, 180, 40);
+
+          doc.setFont('Roboto', 'normal');
+          doc.setFontSize(11);
+          doc.setTextColor('#333333');
+          doc.setFillColor('#F8F8F8');
+          doc.rect(10, 50, 190, 100, 'F');
+
+          doc.setFontSize(13);
+          doc.setTextColor(primaryColor);
+          doc.text('Donation Receipt', 15, 58);
+          doc.setLineWidth(0.5);
+          doc.line(15, 60, 60, 60);
+
+          doc.setFontSize(11);
+          doc.setTextColor('#333333');
+          doc.text(`Donation ID:`, 15, 70);
+          doc.text(donationId, 55, 70);
+          doc.text(`Donor Name:`, 15, 77);
+          doc.text(donorName, 55, 77);
+          doc.text(`Mobile:`, 15, 84);
+          doc.text(donorMobile, 55, 84);
+          doc.text(`Email:`, 15, 91);
+          doc.text(donorEmail, 55, 91);
+          doc.text(`Donation Type:`, 15, 98);
+          doc.text(donationType, 55, 98);
+          doc.text(`Amount:`, 15, 105);
+          doc.text(`INR ${donationAmount}`, 55, 105);
+          doc.text(`Payment Method:`, 15, 112);
+          doc.text(paymentMethod, 55, 112);
+          if (paymentMethod === 'Razorpay') {
+            doc.text(`Payment ID:`, 15, 119);
+            doc.text(paymentId, 55, 119);
+          }
+
+          const qrText = `Donation ID: ${donationId}\nDonor Name: ${donorName}\nMobile: ${donorMobile}\nEmail: ${donorEmail}\nDonation Type: ${donationType}\nAmount: INR ${donationAmount}\nPayment Method: ${paymentMethod}\nPayment ID: ${paymentId}`;
+          const qrCanvas = document.createElement('canvas');
+          QRCode.toCanvas(qrCanvas, qrText, { width: 50 }, function (err) {
+            if (err) console.error('QR code generation failed:', err);
+            else {
+              const qrDataUrl = qrCanvas.toDataURL('image/png');
+              doc.addImage(qrDataUrl, 'PNG', 135, 70, 50, 50);
+            }
+          });
+
+          doc.setFont('Roboto', 'normal');
+          doc.setFontSize(9);
+          doc.setTextColor(primaryColor);
+          doc.text('Scan to Verify', 160, 122, { align: 'center' });
+
+          doc.setFont('Roboto', 'normal');
+          doc.setFontSize(11);
+          doc.setTextColor(primaryColor);
+          doc.text('About Masjid e Aaisha Qadeem', 105, 160, { align: 'center' });
+          doc.setLineWidth(0.5);
+          doc.line(60, 162, 150, 162);
+
+          doc.setFontSize(9);
+          doc.setTextColor('#333333');
+          doc.text('Masjid e Aaisha Qadeem, established in 1984,', 105, 168, { align: 'center' });
+          doc.text('serves as a center for prayer, community gatherings,', 105, 174, { align: 'center' });
+          doc.text('and Islamic education under the guidance of', 105, 180, { align: 'center' });
+          doc.text('a dedicated committee.', 105, 186, { align: 'center' });
+
+          doc.setFontSize(11);
+          doc.setTextColor(primaryColor);
+          doc.text('Imam Details', 105, 191, { align: 'center' });
+          doc.setLineWidth(0.5);
+          doc.line(60, 192, 150, 192);
+
+          doc.setFontSize(9);
+          doc.setTextColor('#333333');
+          doc.text('Imam: Moulana Jarrar Sahab', 105, 198, { align: 'center' });
+          doc.text('Phone: +919601137181', 105, 204, { align: 'center' });
+          doc.text('Email: masjideaq@islamicorg.com', 105, 210, { align: 'center' });
+
+          doc.setFont('Amiri', 'normal');
+          doc.setFontSize(11);
+          doc.setTextColor(primaryColor);
+          doc.setFillColor(secondaryColor);
+          doc.rect(10, 220, 190, 20, 'F');
+          doc.text('Your generous donation strengthens our community', 105, 228, { align: 'center' });
+          doc.text('and supports the mission of Masjid e Aaisha Qadeem.', 105, 234, { align: 'center' });
+          doc.text('JazakAllah Khair!', 105, 240, { align: 'center' });
+
+          doc.save(`Donation_Receipt_${donationId}.pdf`);
+        }).catch(error => {
+          console.error('Error loading logo image:', error.message);
+          alert('Failed to load logo image for the PDF. Please try again.');
         });
       }
 
-      // Load logo image
-      loadImage('https://i.ibb.co/mrq86dPd/20250621-220342.png').then(logo => {
-        // Page border
-        doc.setDrawColor(primaryColor);
-        doc.setLineWidth(1);
-        doc.rect(5, 5, 200, 240, 'S');
+      // Handle non-Razorpay payment methods
+      if (paymentMethod !== 'Razorpay') {
+        generateReceipt();
+        alert(`Thank you, ${donorName}, for your donation of INR ${donationAmount}! A receipt has been generated.`);
+        closeDonationPanel();
+        return;
+      }
 
-        // Header: Logo on the left, moved higher
-        doc.addImage(logo, 'PNG', 10, 2, 40, 40);
-
-        // Header: Masjid name and address centered
-        doc.setFont('Amiri', 'normal');
-        doc.setFontSize(20);
-        doc.setTextColor(primaryColor);
-        doc.text('Masjid e Aaisha Qadeem', 105, 18, { align: 'center' });
-        doc.setFont('Roboto', 'normal');
-        doc.setFontSize(11);
-        doc.setTextColor('#333333');
-        doc.text('Hifazat Nagar, Rajpipla Road, Sarangpur,', 105, 27, { align: 'center' });
-        doc.text('Ankleshwar, Bharuch, Gujarat – 393001', 105, 33, { align: 'center' });
-
-        // Simple horizontal line
-        doc.setDrawColor(secondaryColor);
-        doc.setLineWidth(0.5);
-        doc.line(30, 40, 180, 40);
-
-        // Donation details section
-        doc.setFont('Roboto', 'normal');
-        doc.setFontSize(11);
-        doc.setTextColor('#333333');
-        doc.setFillColor('#F8F8F8');
-        doc.rect(10, 50, 190, 100, 'F'); // Adjusted height for more details
-
-        // Details in a table-like format
-        doc.setFontSize(13);
-        doc.setTextColor(primaryColor);
-        doc.text('Donation Receipt', 15, 58);
-        doc.setLineWidth(0.5);
-        doc.line(15, 60, 60, 60); // Underline for title
-
-        doc.setFontSize(11);
-        doc.setTextColor('#333333');
-        doc.text(`Donation ID:`, 15, 70);
-        doc.text(donationId, 55, 70);
-        doc.text(`Donor Name:`, 15, 77);
-        doc.text(donorName, 55, 77);
-        doc.text(`Mobile:`, 15, 84);
-        doc.text(donorMobile, 55, 84);
-        doc.text(`Email:`, 15, 91);
-        doc.text(donorEmail, 55, 91);
-        doc.text(`Donation Type:`, 15, 98);
-        doc.text(donationType, 55, 98);
-        doc.text(`Amount:`, 15, 105);
-        doc.text(`INR ${donationAmount}`, 55, 105);
-        doc.text(`Payment Method:`, 15, 112);
-        doc.text(paymentMethod, 55, 112);
-
-        // Generate QR code with receipt details
-        const qrText = `Donation ID: ${donationId}\nDonor Name: ${donorName}\nMobile: ${donorMobile}\nEmail: ${donorEmail}\nDonation Type: ${donationType}\nAmount: INR ${donationAmount}\nPayment Method: ${paymentMethod}`;
-        const qrCanvas = document.createElement('canvas');
-        QRCode.toCanvas(qrCanvas, qrText, { width: 50 }, function (err) {
-          if (err) console.error('QR code generation failed:', err);
-          else {
-            const qrDataUrl = qrCanvas.toDataURL('image/png');
-            doc.addImage(qrDataUrl, 'PNG', 135, 70, 50, 50);
+      // Razorpay payment integration
+      const options = {
+        key: 'rzp_test_9mjjYXyscDl4Cn', // Your Razorpay Test API Key
+        amount: parseInt(donationAmount) * 100, // Amount in paise (INR * 100)
+        currency: 'INR',
+        name: 'Masjid e Aaisha Qadeem',
+        description: `${donationType} Donation`,
+        image: 'https://i.ibb.co/mrq86dPd/20250621-220342.png',
+        handler: function (response) {
+          // On successful payment
+          const paymentId = response.razorpay_payment_id;
+          generateReceipt(paymentId);
+          alert(`Thank you, ${donorName}, for your donation of INR ${donationAmount}! Payment ID: ${paymentId}. A receipt has been generated.`);
+          closeDonationPanel();
+        },
+        prefill: {
+          name: donorName,
+          email: donorEmail,
+          contact: donorMobile
+        },
+        notes: {
+          donation_id: donationId,
+          donation_type: donationType
+        },
+        theme: {
+          color: '#5C829A'
+        },
+        modal: {
+          ondismiss: function () {
+            alert('Payment cancelled. Please try again.');
           }
-        });
+        }
+      };
 
-        // Add "Scan to Verify" below QR code
-        doc.setFont('Roboto', 'normal');
-        doc.setFontSize(9);
-        doc.setTextColor(primaryColor);
-        doc.text('Scan to Verify', 160, 122, { align: 'center' });
-
-        // Add About Details slightly above Imam Details
-        doc.setFont('Roboto', 'normal');
-        doc.setFontSize(11);
-        doc.setTextColor(primaryColor);
-        doc.text('About Masjid e Aaisha Qadeem', 105, 160, { align: 'center' });
-        doc.setLineWidth(0.5);
-        doc.line(60, 162, 150, 162); // Underline for title, centered
-
-        doc.setFontSize(9);
-        doc.setTextColor('#333333');
-        doc.text('Masjid e Aaisha Qadeem, established in 1984,', 105, 168, { align: 'center' });
-        doc.text('serves as a center for prayer, community gatherings,', 105, 174, { align: 'center' });
-        doc.text('and Islamic education under the guidance of', 105, 180, { align: 'center' });
-        doc.text('a dedicated committee.', 105, 186, { align: 'center' });
-
-        // Add Imam Details slightly above Thank-you message
-        doc.setFontSize(11);
-        doc.setTextColor(primaryColor);
-        doc.text('Imam Details', 105, 190, { align: 'center' });
-        doc.setLineWidth(0.5);
-        doc.line(60, 192, 150, 192); // Underline for title, centered
-
-        doc.setFontSize(9);
-        doc.setTextColor('#333333');
-        doc.text('Imam: Moulana Jarrar Sahab', 105, 198, { align: 'center' });
-        doc.text('Phone: +919601137181', 105, 204, { align: 'center' });
-        doc.text('Email: masjideaq@islamicorg.com', 105, 210, { align: 'center' });
-
-        // Thank-you message at the bottom
-        doc.setFont('Amiri', 'normal');
-        doc.setFontSize(11);
-        doc.setTextColor(primaryColor);
-        doc.setFillColor(secondaryColor);
-        doc.rect(10, 220, 190, 20, 'F');
-        doc.text('Your generous donation strengthens our community', 105, 228, { align: 'center' });
-        doc.text('and supports the mission of Masjid e Aaisha Qadeem.', 105, 234, { align: 'center' });
-        doc.text('JazakAllah Khair!', 105, 240, { align: 'center' });
-
-        // Save PDF
-        doc.save(`Donation_Receipt_${donationId}.pdf`);
-      }).catch(error => {
-        console.error('Error loading logo image:', error.message);
-        alert('Failed to load logo image for the PDF. Please try again.');
-      });
-
-      // Show success message
-      alert(`Thank you, ${donorName}, for your donation of INR ${donationAmount}! A receipt has been generated.`);
-
-      // Close panel and reset form
-      closeDonationPanel();
+      try {
+        const rzp = new Razorpay(options);
+        rzp.open();
+      } catch (error) {
+        console.error('Razorpay initialization failed:', error);
+        alert('Failed to initiate payment. Please try again.');
+      }
     }
 
     console.log('Masjid e Aaisha Website loaded.');
