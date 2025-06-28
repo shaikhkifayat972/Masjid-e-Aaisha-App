@@ -6,10 +6,8 @@
   <title>Masjid e Aaisha Qadeem</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Added jsPDF and QRCode libraries for PDF and QR code generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.1/qrcode.min.js"></script>
-  <!-- Added Razorpay checkout script -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <style>
     :root {
@@ -118,13 +116,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .section.visible {
       opacity: 1;
-      transform: translateY(0);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .section:nth-child(odd) {
       background: var(--light);
@@ -133,11 +126,28 @@
       font-family: 'Playfair Display', serif;
       font-size: 2.5rem;
       color: var(--primary);
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       text-align: center;
     }
     .section h2 .hideable {
       cursor: pointer;
+    }
+    .donate-button {
+      padding: 10px 20px;
+      background-color: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Amiri', serif;
+      font-size: 1.1rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+      margin-top: 10px;
+    }
+    .donate-button:hover {
+      background-color: var(--secondary);
+      color: var(--dark);
+      transform: translateY(-2px);
     }
     .prayer-times {
       width: 100%;
@@ -410,7 +420,6 @@
       background: var(--secondary);
       color: var(--dark);
     }
-    /* Donation Panel Styles */
     .donation-panel {
       display: none;
       width: 100%;
@@ -457,6 +466,144 @@
       color: var(--dark);
       transform: translateY(-2px);
     }
+    .success-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 3000;
+      justify-content: center;
+      align-items: center;
+    }
+    .success-modal .modal-content {
+      background: var(--light);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+    }
+    .success-modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    .success-modal p {
+      font-size: 1.1rem;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+    .success-modal .download-btn {
+      padding: 10px 20px;
+      background-color: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Amiri', serif;
+      font-size: 1rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .success-modal .download-btn:hover {
+      background-color: var(--secondary);
+      color: var(--dark);
+      transform: translateY(-2px);
+    }
+    .success-modal .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .success-modal .close-btn:hover {
+      background: var(--secondary);
+      color: var(--dark);
+    }
+    .upi-modal, .bank-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 3000;
+      justify-content: center;
+      align-items: center;
+    }
+    .upi-modal .modal-content, .bank-modal .modal-content {
+      background: var(--light);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+    }
+    .upi-modal h3, .bank-modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    .upi-modal p, .bank-modal p {
+      font-size: 1.1rem;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+    .upi-modal img {
+      width: 150px;
+      height: 150px;
+      margin: 15px auto;
+      display: block;
+    }
+    .upi-modal .complete-btn, .bank-modal .complete-btn {
+      padding: 10px 20px;
+      background-color: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Amiri', serif;
+      font-size: 1rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .upi-modal .complete-btn:hover, .bank-modal .complete-btn:hover {
+      background-color: var(--secondary);
+      color: var(--dark);
+      transform: translateY(-2px);
+    }
+    .upi-modal .close-btn, .bank-modal .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .upi-modal .close-btn:hover, .bank-modal .close-btn:hover {
+      background: var(--secondary);
+      color: var(--dark);
+    }
     footer {
       background: var(--primary);
       color: var(--light);
@@ -486,6 +633,14 @@
     .social-icons a:hover {
       color: var(--secondary);
     }
+    .current-time-date {
+      font-size: 1.2rem;
+      color: var(--primary);
+      font-family: 'Amiri', serif;
+      margin-bottom: 10px;
+      text-align: center;
+      width: 100%;
+    }
     @media (max-width: 768px) {
       nav {
         display: flex;
@@ -513,12 +668,16 @@
       .hero { height: 50vh; }
       .hero-content h1 { font-size: 2.5rem; }
       .hero-content p { font-size: 1rem; }
-      .hero-ayat-img { iwidth: 90%; }
+      .hero-ayat-img { width: 90%; }
       .section { padding: 40px 20px; }
       .section h2 { font-size: 2rem; }
       .prayer-card h3 { font-size: 1.3rem; }
       .prayer-card p { font-size: 0.9rem; }
       .gallery-grid img { height: 150px; }
+      .success-modal .modal-content { padding: 20px; }
+      .success-modal h3 { font-size: 1.5rem; }
+      .upi-modal .modal-content, .bank-modal .modal-content { padding: 20px; }
+      .upi-modal h3, .bank-modal h3 { font-size: 1.5rem; }
     }
     @media (max-width: 480px) {
       nav {
@@ -542,12 +701,16 @@
       }
       .nav-buttons a {
         font-size: 0.8rem;
-    padding: 5px 8px;
+        padding: 5px 8px;
       }
       .hero-content h1 { font-size: 2rem; }
       .hero-content p { font-size: 0.9rem; }
       .hero-ayat-img { width: 85%; }
       .section h2 { font-size: 1.8rem; }
+      .success-modal .modal-content { padding: 15px; }
+      .success-modal h3 { font-size: 1.2rem; }
+      .upi-modal .modal-content, .bank-modal .modal-content { padding: 15px; }
+      .upi-modal h3, .bank-modal h3 { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -574,6 +737,7 @@
     <h2>Today <span class="hideable">Prayer</span> Times</h2>
     <div class="prayer-times">
       <h3>Prayer Times</h3>
+      <div class="current-time-date" id="currentTimeDate"></div>
       <div class="prayer-item">
         <i class="fas fa-sun"></i>
         <div class="prayer-name">فجر - Fajr</div>
@@ -667,7 +831,8 @@
     </div>
   </section>
   <section id="donation" class="section">
-    <h2>Support Us <span class="donation-toggle hideable"><i class="fas fa-hand-holding-usd"></i></span></h2>
+    <h2>Support Us</h2>
+    <button class="donate-button" onclick="toggleDonationPanel()">Donate</button>
     <div class="donation-panel" id="donationPanel">
       <button class="close-panel" onclick="closeDonationPanel()">Close</button>
       <div class="donation-form">
@@ -734,220 +899,324 @@
       <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
     </div>
   </footer>
+  <div class="success-modal" id="successModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeSuccessModal()">Close</button>
+      <h3>JazakAllah Khair!</h3>
+      <p id="successMessage">Your donation has been successfully received. Click below to download your receipt.</p>
+      <button class="download-btn" onclick="downloadReceipt()">Download Receipt</button>
+    </div>
+  </div>
+  <div class="upi-modal" id="upiModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeUpiModal()">Close</button>
+      <h3>UPI Payment</h3>
+      <p>UPI ID: masjideaq@upi</p>
+      <img src="https://i.ibb.co/dummy-upi-qr.png" alt="UPI QR Code">
+      <p>Scan the QR code or use the UPI ID to make the payment.</p>
+      <button class="complete-btn" onclick="completeUpiPayment()">Complete Payment</button>
+    </div>
+  </div>
+  <div class="bank-modal" id="bankModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeBankModal()">Close</button>
+      <h3>Bank Transfer Details</h3>
+      <p>Account Name: Masjid e Aaisha Qadeem</p>
+      <p>Account Number: 123456789012</p>
+      <p>IFSC Code: SBIN0001234</p>
+      <p>Bank Name: State Bank of India</p>
+      <p>Branch: Ankleshwar, Bharuch</p>
+      <button class="complete-btn" onclick="completeBankTransfer()">Confirm Transfer</button>
+    </div>
+  </div>
   <script>
+    function updateCurrentTimeDate() {
+      try {
+        const now = new Date();
+        const options = {
+          timeZone: 'Asia/Kolkata',
+          hour12: true,
+          hour: 'numeric',
+          minute: '2-digit',
+          second: '2-digit',
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        };
+        const timeDateString = now.toLocaleString('en-IN', options);
+        document.getElementById('currentTimeDate').textContent = `Current IST: ${timeDateString}`;
+      } catch (error) {
+        console.error('Error updating time and date:', error);
+      }
+    }
+    updateCurrentTimeDate();
+    setInterval(updateCurrentTimeDate, 1000);
+
     function openImageModal(src) {
-      const modal = document.getElementById('imageModal');
-      const modalImage = document.getElementById('modalImage');
-      modalImage.src = src;
-      modal.style.display = 'flex';
+      try {
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = src;
+        modal.style.display = 'flex';
+      } catch (error) {
+        console.error('Error opening image modal:', error);
+      }
     }
     function closeImageModal() {
-      const modal = document.getElementById('imageModal');
-      modal.style.display = 'none';
+      try {
+        const modal = document.getElementById('imageModal');
+        modal.style.display = 'none';
+      } catch (error) {
+        console.error('Error closing image modal:', error);
+      }
     }
-    const sections = document.querySelectorAll('.section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.01 });
-    sections.forEach(section => {
-      observer.observe(section);
-      setTimeout(() => {
-        if (!section.classList.contains('visible')) {
-          section.classList.add('visible');
-        }
-      }, 1000);
-    });
 
     document.querySelectorAll('.nav-buttons a').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        window.scrollTo({
-          top: targetElement.offsetTop - 70,
-          behavior: 'smooth'
-        });
+        try {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          window.scrollTo({
+            top: targetElement.offsetTop - 70,
+            behavior: 'smooth'
+          });
+        } catch (error) {
+          console.error('Error in navigation:', error);
+        }
       });
     });
 
     function loadSavedTimes() {
-      const savedTimes = JSON.parse(localStorage.getItem('prayerTimes')) || {};
-      document.querySelectorAll('.prayer-item').forEach(item => {
-        const prayerName = item.querySelector('.prayer-name').textContent.split(' - ')[1].trim();
-        if (savedTimes[prayerName]) {
-          item.querySelector('.azan').textContent = savedTimes[prayerName].azan;
-          item.querySelector('.jamat').textContent = savedTimes[prayerName].jamat;
-        }
-      });
-      const lastUpdated = document.querySelector('.last-updated');
-      lastUpdated.textContent = localStorage.getItem('lastUpdated') || 'Timings Last changed on - آخر بار تبدیلی\n30/06/25';
+      try {
+        const savedTimes = JSON.parse(localStorage.getItem('prayerTimes')) || {};
+        document.querySelectorAll('.prayer-item').forEach(item => {
+          const prayerName = item.querySelector('.prayer-name').textContent.split(' - ')[1].trim();
+          if (savedTimes[prayerName]) {
+            item.querySelector('.azan').textContent = savedTimes[prayerName].azan;
+            item.querySelector('.jamat').textContent = savedTimes[prayerName].jamat;
+          }
+        });
+        const lastUpdated = document.querySelector('.last-updated');
+        lastUpdated.textContent = localStorage.getItem('lastUpdated') || 'Timings Last changed on - آخر بار تبدیلی\n30/06/25';
+      } catch (error) {
+        console.error('Error loading saved times:', error);
+      }
     }
 
     function to12HourFormat(time24) {
-      const [hours, minutes] = time24.split(':');
-      let hoursInt = parseInt(hours, 10);
-      const period = hoursInt >= 12 ? 'PM' : 'AM';
-      hoursInt = hoursInt % 12 || 12;
-      return `${hoursInt}:${minutes.padStart(2, '0')} ${period}`;
+      try {
+        const [hours, minutes] = time24.split(':');
+        let hoursInt = parseInt(hours, 10);
+        const period = hoursInt >= 12 ? 'PM' : 'AM';
+        hoursInt = hoursInt % 12 || 12;
+        return `${hoursInt}:${minutes.padStart(2, '0')} ${period}`;
+      } catch (error) {
+        console.error('Error in to12HourFormat:', error);
+        return time24;
+      }
     }
 
     function to24HourFormat(time12) {
-      const [time, period] = time12.split(' ');
-      let [hours, minutes] = time.split(':');
-      hours = parseInt(hours, 10);
-      if (period === 'PM' && hours !== 12) hours += 12;
-      if (period === 'AM' && hours === 12) hours = 0;
-      return `${hours.toString().padStart(2, '0')}:${minutes}`;
+      try {
+        const [time, period] = time12.split(' ');
+        let [hours, minutes] = time.split(':');
+        hours = parseInt(hours, 10);
+        if (period === 'PM' && hours !== 12) hours += 12;
+        if (period === 'AM' && hours === 12) hours = 0;
+        return `${hours.toString().padStart(2, '0')}:${minutes}`;
+      } catch (error) {
+        console.error('Error in to24HourFormat:', error);
+        return time12;
+      }
     }
 
     function saveTimes() {
-      const prayerTimes = {};
-      document.querySelectorAll('.prayer-item').forEach(item => {
-        const prayerName = item.querySelector('.prayer-name').textContent.split(' - ')[1].trim();
-        prayerTimes[prayerName] = {
-          azan: item.querySelector('.azan').textContent,
-          jamat: item.querySelector('.jamat').textContent
-        };
-      });
-      const now = new Date();
-      localStorage.setItem('prayerTimes', JSON.stringify(prayerTimes));
-      localStorage.setItem('lastUpdated', `Timings Last changed on - آخر بار تبدیلی\n${now.toLocaleDateString('en-GB')}`);
-      document.querySelector('.last-updated').textContent = localStorage.getItem('lastUpdated');
+      try {
+        const prayerTimes = {};
+        document.querySelectorAll('.prayer-item').forEach(item => {
+          const prayerName = item.querySelector('.prayer-name').textContent.split(' - ')[1].trim();
+          prayerTimes[prayerName] = {
+            azan: item.querySelector('.azan').textContent,
+            jamat: item.querySelector('.jamat').textContent
+          };
+        });
+        const now = new Date();
+        localStorage.setItem('prayerTimes', JSON.stringify(prayerTimes));
+        localStorage.setItem('lastUpdated', `Timings Last changed on - آخر بار تبدیلی\n${now.toLocaleDateString('en-GB')}`);
+        document.querySelector('.last-updated').textContent = localStorage.getItem('lastUpdated');
+      } catch (error) {
+        console.error('Error saving times:', error);
+      }
     }
 
-    loadSavedTimes();
+    try {
+      loadSavedTimes();
+    } catch (error) {
+      console.error('Error in initial loadSavedTimes:', error);
+    }
 
     const prayerText = document.querySelector('.hideable');
     let panelOpen = false;
     prayerText.addEventListener('click', () => {
-      const panel = document.getElementById('updatePanel');
-      if (!panelOpen) {
-        panel.classList.add('active');
-        panelOpen = true;
-      } else {
-        panel.classList.remove('active');
-        panelOpen = false;
+      try {
+        const panel = document.getElementById('updatePanel');
+        if (!panelOpen) {
+          panel.classList.add('active');
+          panelOpen = true;
+        } else {
+          panel.classList.remove('active');
+          panelOpen = false;
+        }
+      } catch (error) {
+        console.error('Error toggling update panel:', error);
       }
     });
 
     function closePanel() {
-      const panel = document.getElementById('updatePanel');
-      panel.classList.remove('active');
-      panelOpen = false;
-      document.querySelector('.password-section').style.display = 'flex';
-      document.querySelectorAll('.update-item').forEach(item => item.classList.remove('active'));
-      document.querySelector('.submit-button').classList.remove('active');
+      try {
+        const panel = document.getElementById('updatePanel');
+        panel.classList.remove('active');
+        panelOpen = false;
+        document.querySelector('.password-section').style.display = 'flex';
+        document.querySelectorAll('.update-item').forEach(item => item.classList.remove('active'));
+        document.querySelector('.submit-button').classList.remove('active');
+      } catch (error) {
+        console.error('Error closing panel:', error);
+      }
     }
 
     function checkPassword() {
-      const passwordInput = document.getElementById('passwordInput').value;
-      const correctPassword = '2580';
-      if (passwordInput === correctPassword) {
-        document.querySelector('.password-section').style.display = 'none';
-        document.querySelectorAll('.update-item').forEach(item => item.classList.add('active'));
-        document.querySelector('.submit-button').classList.add('active');
-      } else {
-        alert('Incorrect password!');
+      try {
+        const passwordInput = document.getElementById('passwordInput').value;
+        const correctPassword = '2580';
+        if (passwordInput === correctPassword) {
+          document.querySelector('.password-section').style.display = 'none';
+          document.querySelectorAll('.update-item').forEach(item => item.classList.add('active'));
+          document.querySelector('.submit-button').classList.add('active');
+        } else {
+          alert('Incorrect password!');
+        }
+      } catch (error) {
+        console.error('Error in checkPassword:', error);
+        alert('Error checking password. Please try again.');
       }
     }
 
     function saveUpdates() {
-      const fajrAzan = document.getElementById('fajrAzan').value;
-      const fajrJamat = document.getElementById('fajrJamat').value;
-      const zuhrAzan = document.getElementById('zuhrAzan').value;
-      const zuhrJamat = document.getElementById('zuhrJamat').value;
-      const asrAzan = document.getElementById('asrAzan').value;
-      const asrJamat = document.getElementById('asrJamat').value;
-      const maghribAzan = document.getElementById('maghribAzan').value;
-      const maghribJamat = document.getElementById('maghribJamat').value;
-      const ishaAzan = document.getElementById('ishaAzan').value;
-      const ishaJamat = document.getElementById('ishaJamat').value;
-      const jummaAzan = document.getElementById('jummaAzan').value;
-      const jummaJamat = document.getElementById('jummaJamat').value;
+      try {
+        const fajrAzan = document.getElementById('fajrAzan').value;
+        const fajrJamat = document.getElementById('fajrJamat').value;
+        const zuhrAzan = document.getElementById('zuhrAzan').value;
+        const zuhrJamat = document.getElementById('zuhrJamat').value;
+        const asrAzan = document.getElementById('asrAzan').value;
+        const asrJamat = document.getElementById('asrJamat').value;
+        const maghribAzan = document.getElementById('maghribAzan').value;
+        const maghribJamat = document.getElementById('maghribJamat').value;
+        const ishaAzan = document.getElementById('ishaAzan').value;
+        const ishaJamat = document.getElementById('ishaJamat').value;
+        const jummaAzan = document.getElementById('jummaAzan').value;
+        const jummaJamat = document.getElementById('jummaJamat').value;
 
-      document.querySelectorAll('.prayer-item').forEach(item => {
-        const prayerName = item.querySelector('.prayer-name').textContent.split(' - ')[1].trim();
-        if (prayerName === 'Fajr') {
-          item.querySelector('.azan').textContent = to12HourFormat(fajrAzan);
-          item.querySelector('.jamat').textContent = to12HourFormat(fajrJamat);
-        } else if (prayerName === 'Zuhr') {
-          item.querySelector('.azan').textContent = to12HourFormat(zuhrAzan);
-          item.querySelector('.jamat').textContent = to12HourFormat(zuhrJamat);
-        } else if (prayerName === 'Asr') {
-          item.querySelector('.azan').textContent = to12HourFormat(asrAzan);
-          item.querySelector('.jamat').textContent = to12HourFormat(asrJamat);
-        } else if (prayerName === 'Maghrib') {
-          item.querySelector('.azan').textContent = to12HourFormat(maghribAzan);
-          item.querySelector('.jamat').textContent = to12HourFormat(maghribJamat);
-        } else if (prayerName === 'Isha') {
-          item.querySelector('.azan').textContent = to12HourFormat(ishaAzan);
-          item.querySelector('.jamat').textContent = to12HourFormat(ishaJamat);
-        } else if (prayerName === 'Jumma') {
-          item.querySelector('.azan').textContent = to12HourFormat(jummaAzan);
-          item.querySelector('.jamat').textContent = to12HourFormat(jummaJamat);
-        }
-      });
+        document.querySelectorAll('.prayer-item').forEach(item => {
+          const prayerName = item.querySelector('.prayer-name').textContent.split(' - ')[1].trim();
+          if (prayerName === 'Fajr') {
+            item.querySelector('.azan').textContent = to12HourFormat(fajrAzan);
+            item.querySelector('.jamat').textContent = to12HourFormat(fajrJamat);
+          } else if (prayerName === 'Zuhr') {
+            item.querySelector('.azan').textContent = to12HourFormat(zuhrAzan);
+            item.querySelector('.jamat').textContent = to12HourFormat(zuhrJamat);
+          } else if (prayerName === 'Asr') {
+            item.querySelector('.azan').textContent = to12HourFormat(asrAzan);
+            item.querySelector('.jamat').textContent = to12HourFormat(asrJamat);
+          } else if (prayerName === 'Maghrib') {
+            item.querySelector('.azan').textContent = to12HourFormat(maghribAzan);
+            item.querySelector('.jamat').textContent = to12HourFormat(maghribJamat);
+          } else if (prayerName === 'Isha') {
+            item.querySelector('.azan').textContent = to12HourFormat(ishaAzan);
+            item.querySelector('.jamat').textContent = to12HourFormat(ishaJamat);
+          } else if (prayerName === 'Jumma') {
+            item.querySelector('.azan').textContent = to12HourFormat(jummaAzan);
+            item.querySelector('.jamat').textContent = to12HourFormat(jummaJamat);
+          }
+        });
 
-      saveTimes();
-      alert('Prayer Times updated successfully!');
-      closePanel();
+        saveTimes();
+        alert('Prayer Times updated successfully!');
+        closePanel();
+      } catch (error) {
+        console.error('Error in saveUpdates:', error);
+        alert('Error updating prayer times. Please try again.');
+      }
     }
 
-    // Donation Panel Functions
     let donationPanelOpen = false;
-    const donationToggle = document.querySelector('.donation-toggle');
-    donationToggle.addEventListener('click', () => {
-      const panel = document.getElementById('donationPanel');
-      if (!donationPanelOpen) {
-        panel.classList.add('active');
+    function toggleDonationPanel() {
+      try {
+        const panel = document.getElementById('donationPanel');
+        if (!donationPanelOpen) {
+          panel.classList.add('active');
+          document.getElementById('donorName').value = '';
+          document.getElementById('donorMobile').value = '';
+          document.getElementById('donorEmail').value = '';
+          document.getElementById('donationType').value = '';
+          document.getElementById('donationAmount').value = '';
+          document.getElementById('paymentMethod').value = '';
+          donationPanelOpen = true;
+        } else {
+          panel.classList.remove('active');
+          donationPanelOpen = false;
+        }
+      } catch (error) {
+        console.error('Error toggling donation panel:', error);
+      }
+    }
+
+    function closeDonationPanel() {
+      try {
+        const panel = document.getElementById('donationPanel');
+        panel.classList.remove('active');
+        donationPanelOpen = false;
         document.getElementById('donorName').value = '';
         document.getElementById('donorMobile').value = '';
         document.getElementById('donorEmail').value = '';
         document.getElementById('donationType').value = '';
         document.getElementById('donationAmount').value = '';
         document.getElementById('paymentMethod').value = '';
-        donationPanelOpen = true;
-      } else {
-        panel.classList.remove('active');
-        donationPanelOpen = false;
+      } catch (error) {
+        console.error('Error closing donation panel:', error);
       }
-    });
-
-    function closeDonationPanel() {
-      const panel = document.getElementById('donationPanel');
-      panel.classList.remove('active');
-      donationPanelOpen = false;
-      document.getElementById('donorName').value = '';
-      document.getElementById('donorMobile').value = '';
-      document.getElementById('donorEmail').value = '';
-      document.getElementById('donationType').value = '';
-      document.getElementById('donationAmount').value = '';
-      document.getElementById('paymentMethod').value = '';
     }
 
-    function confirmDonation() {
-      const donorName = document.getElementById('donorName').value;
-      const donorMobile = document.getElementById('donorMobile').value;
-      const donorEmail = document.getElementById('donorEmail').value;
-      const donationAmount = document.getElementById('donationAmount').value;
-      const donationType = document.getElementById('donationType').value;
-      const paymentMethod = document.getElementById('paymentMethod').value;
-
-      if (!donorName || !donorMobile || !donorEmail || !donationAmount || !donationType || !paymentMethod) {
-        alert('Please fill in all fields.');
-        return;
+    function closeSuccessModal() {
+      try {
+        const modal = document.getElementById('successModal');
+        modal.style.display = 'none';
+      } catch (error) {
+        console.error('Error closing success modal:', error);
       }
+    }
 
-      // Generate unique donation ID
-      const donationId = 'MASJID-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    function closeUpiModal() {
+      try {
+        const modal = document.getElementById('upiModal');
+        modal.style.display = 'none';
+      } catch (error) {
+        console.error('Error closing UPI modal:', error);
+      }
+    }
 
-      // Function to generate PDF receipt
-      function generateReceipt(paymentId = 'N/A') {
+    function closeBankModal() {
+      try {
+        const modal = document.getElementById('bankModal');
+        modal.style.display = 'none';
+      } catch (error) {
+        console.error('Error closing bank modal:', error);
+      }
+    }
+
+    async function generateReceipt(paymentId = 'N/A', donorName = 'Unknown', donationAmount = '0', donationId = 'MASJID-UNKNOWN', donorMobile = 'N/A', donorEmail = 'N/A', donationType = 'N/A', paymentMethod = 'N/A') {
+      try {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF({
           orientation: 'portrait',
@@ -968,169 +1237,275 @@
           });
         }
 
-        loadImage('https://i.ibb.co/mrq86dPd/20250621-220342.png').then(logo => {
-          doc.setDrawColor(primaryColor);
-          doc.setLineWidth(1);
-          doc.rect(5, 5, 200, 240, 'S');
+        const logo = await loadImage('https://i.ibb.co/mrq86dPd/20250621-220342.png');
 
-          doc.addImage(logo, 'PNG', 10, 2, 40, 40);
+        doc.setDrawColor(primaryColor);
+        doc.setLineWidth(1);
+        doc.rect(5, 5, 200, 240, 'S');
 
-          doc.setFont('Amiri', 'normal');
-          doc.setFontSize(20);
-          doc.setTextColor(primaryColor);
-          doc.text('Masjid e Aaisha Qadeem', 105, 18, { align: 'center' });
-          doc.setFont('Roboto', 'normal');
-          doc.setFontSize(11);
-          doc.setTextColor('#333333');
-          doc.text('Hifazat Nagar, Rajpipla Road, Sarangpur,', 105, 27, { align: 'center' });
-          doc.text('Ankleshwar, Bharuch, Gujarat – 393001', 105, 33, { align: 'center' });
+        doc.addImage(logo, 'PNG', 10, 2, 40, 40);
 
-          doc.setDrawColor(secondaryColor);
-          doc.setLineWidth(0.5);
-          doc.line(30, 40, 180, 40);
+        doc.setFont('Amiri', 'normal');
+        doc.setFontSize(20);
+        doc.setTextColor(primaryColor);
+        doc.text('Masjid e Aaisha Qadeem', 105, 18, { align: 'center' });
+        doc.setFont('Roboto', 'normal');
+        doc.setFontSize(11);
+        doc.setTextColor('#333333');
+        doc.text('Hifazat Nagar, Rajpipla Road, Sarangpur,', 105, 27, { align: 'center' });
+        doc.text('Ankleshwar, Bharuch, Gujarat – 393001', 105, 33, { align: 'center' });
 
-          doc.setFont('Roboto', 'normal');
-          doc.setFontSize(11);
-          doc.setTextColor('#333333');
-          doc.setFillColor('#F8F8F8');
-          doc.rect(10, 50, 190, 100, 'F');
+        doc.setDrawColor(secondaryColor);
+        doc.setLineWidth(0.5);
+        doc.line(30, 40, 180, 40);
 
-          doc.setFontSize(13);
-          doc.setTextColor(primaryColor);
-          doc.text('Donation Receipt', 15, 58);
-          doc.setLineWidth(0.5);
-          doc.line(15, 60, 60, 60);
+        doc.setFont('Roboto', 'normal');
+        doc.setFontSize(11);
+        doc.setTextColor('#333333');
+        doc.setFillColor('#F8F8F8');
+        doc.rect(10, 50, 190, 100, 'F');
 
-          doc.setFontSize(11);
-          doc.setTextColor('#333333');
-          doc.text(`Donation ID:`, 15, 70);
-          doc.text(donationId, 55, 70);
-          doc.text(`Donor Name:`, 15, 77);
-          doc.text(donorName, 55, 77);
-          doc.text(`Mobile:`, 15, 84);
-          doc.text(donorMobile, 55, 84);
-          doc.text(`Email:`, 15, 91);
-          doc.text(donorEmail, 55, 91);
-          doc.text(`Donation Type:`, 15, 98);
-          doc.text(donationType, 55, 98);
-          doc.text(`Amount:`, 15, 105);
-          doc.text(`INR ${donationAmount}`, 55, 105);
-          doc.text(`Payment Method:`, 15, 112);
-          doc.text(paymentMethod, 55, 112);
-          if (paymentMethod === 'Razorpay') {
-            doc.text(`Payment ID:`, 15, 119);
-            doc.text(paymentId, 55, 119);
-          }
+        doc.setFontSize(13);
+        doc.setTextColor(primaryColor);
+        doc.text('Donation Receipt', 15, 58);
+        doc.setLineWidth(0.5);
+        doc.line(15, 60, 60, 60);
 
-          const qrText = `Donation ID: ${donationId}\nDonor Name: ${donorName}\nMobile: ${donorMobile}\nEmail: ${donorEmail}\nDonation Type: ${donationType}\nAmount: INR ${donationAmount}\nPayment Method: ${paymentMethod}\nPayment ID: ${paymentId}`;
-          const qrCanvas = document.createElement('canvas');
-          QRCode.toCanvas(qrCanvas, qrText, { width: 50 }, function (err) {
-            if (err) console.error('QR code generation failed:', err);
-            else {
-              const qrDataUrl = qrCanvas.toDataURL('image/png');
-              doc.addImage(qrDataUrl, 'PNG', 135, 70, 50, 50);
-            }
-          });
-
-          doc.setFont('Roboto', 'normal');
-          doc.setFontSize(9);
-          doc.setTextColor(primaryColor);
-          doc.text('Scan to Verify', 160, 122, { align: 'center' });
-
-          doc.setFont('Roboto', 'normal');
-          doc.setFontSize(11);
-          doc.setTextColor(primaryColor);
-          doc.text('About Masjid e Aaisha Qadeem', 105, 160, { align: 'center' });
-          doc.setLineWidth(0.5);
-          doc.line(60, 162, 150, 162);
-
-          doc.setFontSize(9);
-          doc.setTextColor('#333333');
-          doc.text('Masjid e Aaisha Qadeem, established in 1984,', 105, 168, { align: 'center' });
-          doc.text('serves as a center for prayer, community gatherings,', 105, 174, { align: 'center' });
-          doc.text('and Islamic education under the guidance of', 105, 180, { align: 'center' });
-          doc.text('a dedicated committee.', 105, 186, { align: 'center' });
-
-          doc.setFontSize(11);
-          doc.setTextColor(primaryColor);
-          doc.text('Imam Details', 105, 191, { align: 'center' });
-          doc.setLineWidth(0.5);
-          doc.line(60, 192, 150, 192);
-
-          doc.setFontSize(9);
-          doc.setTextColor('#333333');
-          doc.text('Imam: Moulana Jarrar Sahab', 105, 198, { align: 'center' });
-          doc.text('Phone: +919601137181', 105, 204, { align: 'center' });
-          doc.text('Email: masjideaq@islamicorg.com', 105, 210, { align: 'center' });
-
-          doc.setFont('Amiri', 'normal');
-          doc.setFontSize(11);
-          doc.setTextColor(primaryColor);
-          doc.setFillColor(secondaryColor);
-          doc.rect(10, 220, 190, 20, 'F');
-          doc.text('Your generous donation strengthens our community', 105, 228, { align: 'center' });
-          doc.text('and supports the mission of Masjid e Aaisha Qadeem.', 105, 234, { align: 'center' });
-          doc.text('JazakAllah Khair!', 105, 240, { align: 'center' });
-
-          doc.save(`Donation_Receipt_${donationId}.pdf`);
-        }).catch(error => {
-          console.error('Error loading logo image:', error.message);
-          alert('Failed to load logo image for the PDF. Please try again.');
-        });
-      }
-
-      // Handle non-Razorpay payment methods
-      if (paymentMethod !== 'Razorpay') {
-        generateReceipt();
-        alert(`Thank you, ${donorName}, for your donation of INR ${donationAmount}! A receipt has been generated.`);
-        closeDonationPanel();
-        return;
-      }
-
-      // Razorpay payment integration
-      const options = {
-        key: 'rzp_test_9mjjYXyscDl4Cn', // Your Razorpay Test API Key
-        amount: parseInt(donationAmount) * 100, // Amount in paise (INR * 100)
-        currency: 'INR',
-        name: 'Masjid e Aaisha Qadeem',
-        description: `${donationType} Donation`,
-        image: 'https://i.ibb.co/mrq86dPd/20250621-220342.png',
-        handler: function (response) {
-          // On successful payment
-          const paymentId = response.razorpay_payment_id;
-          generateReceipt(paymentId);
-          alert(`Thank you, ${donorName}, for your donation of INR ${donationAmount}! Payment ID: ${paymentId}. A receipt has been generated.`);
-          closeDonationPanel();
-        },
-        prefill: {
-          name: donorName,
-          email: donorEmail,
-          contact: donorMobile
-        },
-        notes: {
-          donation_id: donationId,
-          donation_type: donationType
-        },
-        theme: {
-          color: '#5C829A'
-        },
-        modal: {
-          ondismiss: function () {
-            alert('Payment cancelled. Please try again.');
-          }
+        doc.setFontSize(11);
+        doc.setTextColor('#333333');
+        doc.text(`Donation ID:`, 15, 70);
+        doc.text(donationId, 55, 70);
+        doc.text(`Donor Name:`, 15, 77);
+        doc.text(donorName, 55, 77);
+        doc.text(`Mobile:`, 15, 84);
+        doc.text(donorMobile, 55, 84);
+        doc.text(`Email:`, 15, 91);
+        doc.text(donorEmail, 55, 91);
+        doc.text(`Donation Type:`, 15, 98);
+        doc.text(donationType, 55, 98);
+        doc.text(`Amount:`, 15, 105);
+        doc.text(`INR ${donationAmount}`, 55, 105);
+        doc.text(`Payment Method:`, 15, 112);
+        doc.text(paymentMethod, 55, 112);
+        if (paymentId !== 'N/A') {
+          doc.text(`Payment ID:`, 15, 119);
+          doc.text(paymentId, 55, 119);
         }
-      };
 
+        const qrText = `Donation ID: ${donationId}\nDonor Name: ${donorName}\nMobile: ${donorMobile}\nEmail: ${donorEmail}\nDonation Type: ${donationType}\nAmount: INR ${donationAmount}\nPayment ID: ${paymentId}`;
+        const qrCanvas = document.createElement('canvas');
+        await new Promise((resolve, reject) => {
+          QRCode.toCanvas(qrCanvas, qrText, { width: 50 }, (err) => {
+            if (err) reject(err);
+            else resolve();
+          });
+        });
+        const qrDataUrl = qrCanvas.toDataURL('image/png');
+        doc.addImage(qrDataUrl, 'PNG', 135, 70, 50, 50);
+
+        doc.setFont('Roboto', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(primaryColor);
+        doc.text('Scan to Verify', 160, 122, { align: 'center' });
+
+        doc.setFont('Roboto', 'normal');
+        doc.setFontSize(11);
+        doc.setTextColor(primaryColor);
+        doc.text(`Purpose of ${donationType}`, 105, 160, { align: 'center' });
+        doc.setLineWidth(0.5);
+        doc.line(60, 162, 150, 162);
+
+        doc.setFontSize(9);
+        doc.setTextColor('#333333');
+        let purposeText = '';
+        if (donationType === 'Zakat') {
+          purposeText = 'Zakat is an obligatory charity to purify wealth, distributed to those in need as per Islamic guidelines.';
+        } else if (donationType === 'Sadqah') {
+          purposeText = 'Sadqah is a voluntary charity given to seek Allah’s blessings and support community welfare.';
+        } else if (donationType === 'Lillah') {
+          purposeText = 'Lillah is a donation given for the sake of Allah to support Islamic causes and community projects.';
+        } else {
+          purposeText = 'Your donation supports the mission of Masjid e Aaisha Qadeem.';
+        }
+        const splitText = doc.splitTextToSize(purposeText, 130);
+        doc.text(splitText, 105, 168, { align: 'center' });
+
+        doc.setFont('Roboto', 'normal');
+        doc.setFontSize(11);
+        doc.setTextColor(primaryColor);
+        doc.text('Contact Us', 105, 190, { align: 'center' });
+        doc.setLineWidth(0.5);
+        doc.line(60, 192, 150, 192);
+
+        doc.setFontSize(9);
+        doc.setTextColor('#333333');
+        doc.text('Phone: +919601137181', 105, 198, { align: 'center' });
+        doc.text('Email: masjideaq@islamicorg.com', 105, 204, { align: 'center' });
+
+        doc.setFont('Amiri', 'normal');
+        doc.setFontSize(11);
+        doc.setTextColor(primaryColor);
+        doc.setFillColor(secondaryColor);
+        doc.rect(10, 220, 190, 20, 'F');
+        doc.text('Your generous donation strengthens our community', 105, 228, { align: 'center' });
+        doc.text('and supports the mission of Masjid e Aaisha Qadeem.', 105, 234, { align: 'center' });
+        doc.text('JazakAllah Khair!', 105, 240, { align: 'center' });
+
+        doc.save(`Donation_Receipt_${donationId}.pdf`);
+      } catch (error) {
+        console.error('Error generating receipt:', error);
+        alert('Failed to generate receipt. Please try again or contact support.');
+      }
+    }
+
+    function completeUpiPayment() {
       try {
-        const rzp = new Razorpay(options);
-        rzp.open();
+        const donorName = window.currentDonorName;
+        const donationAmount = window.currentDonationAmount;
+        const donationId = window.currentDonationId;
+        const donorMobile = window.currentMobile;
+        const donorEmail = window.currentEmail;
+        const donationType = window.currentDonationType;
+        closeUpiModal();
+        const modal = document.getElementById('successModal');
+        modal.style.display = 'flex';
+        modal.querySelector('#successMessage').textContent = `Thank you, ${donorName}, for your ${donationType} donation of INR ${donationAmount} via UPI! Click below to download your receipt.`;
+        generateReceipt('N/A', donorName, donationAmount, donationId, donorMobile, donorEmail, donationType, 'UPI');
+      } catch (error) {
+        console.error('Error completing UPI payment:', error);
+        alert('Error processing UPI payment. Please try again.');
+      }
+    }
+
+    function completeBankTransfer() {
+      try {
+        const donorName = window.currentDonorName;
+        const donationAmount = window.currentDonationAmount;
+        const donationId = window.currentDonationId;
+        const donorMobile = window.currentMobile;
+        const donorEmail = window.currentEmail;
+        const donationType = window.currentDonationType;
+        closeBankModal();
+        const modal = document.getElementById('successModal');
+        modal.style.display = 'flex';
+        modal.querySelector('#successMessage').textContent = `Thank you, ${donorName}, for your ${donationType} donation of INR ${donationAmount} via Bank Transfer! Click below to download your receipt.`;
+        generateReceipt('N/A', donorName, donationAmount, donationId, donorMobile, donorEmail, donationType, 'Bank Transfer');
+      } catch (error) {
+        console.error('Error completing bank transfer:', error);
+        alert('Error processing bank transfer. Please try again.');
+      }
+    }
+
+    function confirmDonation() {
+      try {
+        const donorName = document.getElementById('donorName').value;
+        const donorMobile = document.getElementById('donorMobile').value;
+        const donorEmail = document.getElementById('donorEmail').value;
+        const donationAmount = document.getElementById('donationAmount').value;
+        const donationType = document.getElementById('donationType').value;
+        const paymentMethod = document.getElementById('paymentMethod').value;
+
+        if (!donorName || !donorMobile || !donorEmail || !donationAmount || !donationType || !paymentMethod) {
+          alert('Please fill in all fields.');
+          return;
+        }
+
+        const donationId = 'MASJID-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+
+        window.currentDonorName = donorName;
+        window.currentDonationAmount = donationAmount;
+        window.currentDonationId = donationId;
+        window.currentMobile = donorMobile;
+        window.currentEmail = donorEmail;
+        window.currentDonationType = donationType;
+        window.currentPaymentMethod = paymentMethod;
+
+        if (paymentMethod === 'UPI') {
+          closeDonationPanel();
+          const modal = document.getElementById('upiModal');
+          modal.style.display = 'flex';
+          return;
+        }
+
+        if (paymentMethod === 'Bank Transfer') {
+          closeDonationPanel();
+          const modal = document.getElementById('bankModal');
+          modal.style.display = 'flex';
+          return;
+        }
+
+        if (paymentMethod === 'Cash') {
+          generateReceipt('N/A', donorName, donationAmount, donationId, donorMobile, donorEmail, donationType, 'Cash');
+          alert(`Thank you, ${donorName}, for your ${donationType} donation of INR ${donationAmount}! A receipt has been generated.`);
+          closeDonationPanel();
+          return;
+        }
+
+        if (paymentMethod === 'Razorpay') {
+          const options = {
+            key: 'rzp_test_9mjjYXyscDl4Cn',
+            amount: parseInt(donationAmount) * 100,
+            currency: 'INR',
+            name: 'Masjid e Aaisha Qadeem',
+            description: `${donationType} Donation`,
+            image: 'https://i.ibb.co/mrq86dPd/20250621-220342.png',
+            handler: function (response) {
+              const paymentId = response.razorpay_payment_id;
+              const modal = document.getElementById('successModal');
+              modal.style.display = 'flex';
+              modal.querySelector('#successMessage').textContent = `Thank you, ${donorName}, for your ${donationType} donation of INR ${donationAmount}! Payment ID: ${paymentId}. Click below to download your receipt.`;
+              window.currentPaymentId = paymentId;
+              closeDonationPanel();
+            },
+            prefill: {
+              name: donorName,
+              email: donorEmail,
+              contact: donorMobile
+            },
+            notes: {
+              donation_id: donationId,
+              donation_type: donationType
+            },
+            theme: {
+              color: '#5C829A'
+            },
+            modal: {
+              ondismiss: function () {
+                alert('Payment cancelled. Please try again.');
+              }
+            }
+          };
+
+          const rzp = new Razorpay(options);
+          rzp.open();
+        }
       } catch (error) {
         console.error('Razorpay initialization failed:', error);
         alert('Failed to initiate payment. Please try again.');
       }
     }
 
+    function downloadReceipt() {
+      try {
+        generateReceipt(
+          window.currentPaymentId || 'N/A',
+          window.currentDonorName,
+          window.currentDonationAmount,
+          window.currentDonationId,
+          window.currentMobile,
+          window.currentEmail,
+          window.currentDonationType,
+          window.currentPaymentMethod || 'N/A'
+        );
+        alert(`Thank you, ${window.currentDonorName}, for your ${window.currentDonationType} donation of INR ${window.currentDonationAmount}! Your receipt (Donation_Receipt_${window.currentDonationId}.pdf) has been downloaded.`);
+        closeSuccessModal();
+      } catch (error) {
+        console.error('Error downloading receipt:', error);
+        alert('Error downloading receipt. Please try again.');
+      }
+    }
+
     console.log('Masjid e Aaisha Website loaded.');
   </script>
 </body>
-</html>
+</html> 
